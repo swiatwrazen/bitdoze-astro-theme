@@ -7,33 +7,27 @@ export interface Props {
   postsPerTag?: number;
 }
 
-const { 
-  tags = ["Jamstack", "astro", "carrd"], 
-  postsPerTag = 5 
+const {
+  tags = ["Jamstack", "astro", "carrd"],
+  postsPerTag = 5,
 } = Astro.props;
 
-// Get all posts
 const allPosts = await getCollection("posts");
-
-// Sort posts by date (most recent first)
 const sortedPosts = allPosts.sort((a, b) => {
   const dateA = new Date(a.data.date || "");
   const dateB = new Date(b.data.date || "");
   return dateB.getTime() - dateA.getTime();
 });
 
-// Helper function to slugify text
-function slugify(text: string): string {
-  return text
+const slugify = (text: string): string =>
+  text
     .toString()
     .toLowerCase()
     .trim()
     .replace(/\s+/g, "-")
     .replace(/[^\w\-]+/g, "")
     .replace(/\-\-+/g, "-");
-}
 
-// Get posts for each tag
 const tagPosts = tags.map((tag) => ({
   tag,
   posts: sortedPosts
@@ -42,74 +36,58 @@ const tagPosts = tags.map((tag) => ({
 }));
 ---
 
-<section class="py-12 bg-gradient-to-b from-gray-850 to-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-black">
-  <div class="container mx-auto px-4">
-    <h2 class="text-3xl font-bold text-center mb-10 text-gray-900 dark:text-gray-100">Popular Topics</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {
-        tagPosts.map(({ tag, posts }) => (
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 transition-transform duration-400 hover:transform hover:scale-[1.01]">
-            <div class="flex items-center mb-4">
-              <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 capitalize">{tag}</h3>
-              <div class="ml-2 px-2 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-xs rounded-full">
-                {posts.length}
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+  {
+    tagPosts.map(({ tag, posts }) => (
+      <div class="flex h-full flex-col rounded-3xl bg-white p-6 shadow-xl ring-1 ring-brand-blue/10">
+        <div class="flex items-center justify-between">
+          <h3 class="text-2xl font-semibold text-brand-blue capitalize">{tag}</h3>
+          <span class="inline-flex items-center rounded-full bg-brand-blue/10 px-3 py-1 text-sm font-semibold text-brand-blue">
+            {posts.length}
+          </span>
+        </div>
+        <div class="mt-6 flex-1 space-y-4">
+          {posts.map((post) => (
+            <a
+              href={`/${post.slug}/`}
+              class="flex gap-4 rounded-2xl border border-brand-blue/10 p-4 transition hover:border-brand-blue/40 hover:bg-brand-blue/5"
+            >
+              <div class="relative h-16 w-24 overflow-hidden rounded-xl bg-brand-blue/10">
+                {post.data.image && (
+                  <Image
+                    src={post.data.image}
+                    alt={post.data.title}
+                    width={120}
+                    height={80}
+                    class="h-full w-full object-cover"
+                  />
+                )}
               </div>
-            </div>
-            <div class="divide-y divide-gray-100 dark:divide-gray-700">
-              {posts.map((post) => (
-                <a
-                  href={`/${post.slug}/`}
-                  class="flex items-center gap-4 group hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg py-3 first:pt-0 last:pb-0"
-                >
-                  <div class="relative flex-shrink-0 w-20 overflow-hidden rounded-lg shadow-sm">
-                    <div class="aspect-[16/9]">
-                      {post.data.image && (
-                        <Image
-                          src={post.data.image}
-                          alt={post.data.title}
-                          width={80}
-                          height={45}
-                          class="object-cover w-full h-fulltransition-transform duration-400 group-hover:scale-110"
-                        />
-                      )}
-                    </div>
-                  </div>
-                  <div class="flex-grow min-w-0">
-                    <h4 class="text-sm font-medium text-gray-800 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-2">
-                      {post.data.title}
-                    </h4>
-                    {post.data.date && (
-                      <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        {new Date(post.data.date).toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}
-                      </p>
-                    )}
-                  </div>
-                </a>
-              ))}
-            </div>
-            <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700">
-              <a
-                href={`/tags/${slugify(tag)}/`}
-                class="inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 group"
-              >
-                <span class="group-hover:underline">View all {tag} posts</span>
-                <svg
-                  class="w-4 h-4 ml-1 group-hover:translate-x-0.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M5 12h14" />
-                  <path d="M12 5l7 7-7 7" />
-                </svg>
-              </a>
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </div>
-</section>
+              <div class="flex flex-col">
+                <p class="line-clamp-2 text-sm font-semibold text-gray-800">
+                  {post.data.title}
+                </p>
+                {post.data.date && (
+                  <span class="mt-2 text-xs text-gray-500">
+                    {new Date(post.data.date).toLocaleDateString("pl-PL")}
+                  </span>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+        <div class="mt-6 pt-4">
+          <a
+            href={`/tags/${slugify(tag)}/`}
+            class="inline-flex items-center gap-2 font-semibold text-brand-blue hover:underline"
+          >
+            Wiecej artykulow
+            <svg class="size-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 0 1 0-1.414L10.586 10 7.293 6.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414 0Z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    ))
+  }
+</div>

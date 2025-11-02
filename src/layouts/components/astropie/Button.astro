@@ -1,0 +1,14 @@
+---
+const { color = "primary", url = "", newtab = false, As = "a", class: className = "", ...props } = Astro.props;
+const classes = ["not-prose", "button", `button-${color}`, className].filter(Boolean).join(" ");
+---
+
+<As
+	class={classes}
+	href={url}
+	target={newtab ? "_blank" : "_self"}
+	rel={newtab ? "noopener noreferrer" : ""}
+	{...props}
+>
+	<slot />
+</As>

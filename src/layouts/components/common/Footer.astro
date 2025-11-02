@@ -1,74 +1,60 @@
 ---
-import { Icon } from 'astro-icon/components';
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import { Icon } from "astro-icon/components";
+import { getCollection } from "astro:content";
 import menu from "@config/menu.json";
 import social from "@config/social.json";
 import { siteConfig } from "@config/site";
-import logoSVG from "@assets/favicons/bitdoze_logo_better.svg";
+import { company, phone, email, address } from "@config/company";
 
-
-// Extract footer menu items
-const footerMenu = menu.footer;
-
-// Filter social media links that are not empty
+const footerMenu = menu.footer ?? [];
 const socialLinks = Object.entries(social)
-  .filter(([_, url]) => url !== "")
-  .map(([platform, url]) => ({ platform, url }));
-  
-// Get recent posts for the footer
-const allPosts = await getCollection('posts', ({ data }) => {
-  return !data.draft;
-});
+  .filter(([, url]) => Boolean(url))
+  .map(([platform, url]) => ({ platform, url }))
+  .slice(0, 6);
 
-// Sort posts by date (newest first) and get the latest 3
+const allPosts = await getCollection("posts", ({ data }) => !data.draft);
 const recentPosts = allPosts
   .sort((a, b) => new Date(b.data.date || 0).getTime() - new Date(a.data.date || 0).getTime())
   .slice(0, 3);
+
+const currentYear = new Date().getFullYear();
+const brandParts = company.name.split(" ").filter(Boolean);
+const brandPrimary = brandParts[0] ?? siteConfig.name;
+const brandSecondary = brandParts.slice(1).join(" ");
 ---
 
-<footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-10 w-full">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Logo and Description -->
-      <div class="flex flex-col space-y-4">
-        <Image 
-        src={logoSVG} 
-        alt="BitDoze Logo" 
-        width={140} 
-        height={140} 
-        class="mr-2"
-      />
-    </a>
-        <p class="text-gray-500 dark:text-gray-400 text-sm">
-          Providing valuable resources and tutorials for web developers and tech enthusiasts.
+<footer class="mt-16 bg-brand-blue text-white">
+  <div class="container py-16">
+    <div class="grid gap-12 lg:grid-cols-4">
+      <div class="space-y-6">
+        <p class="text-3xl font-black text-white">
+          {brandPrimary}
+          {brandSecondary && (
+            <span class="ml-2 inline-flex rounded-lg bg-white px-3 text-brand-navy">{brandSecondary}</span>
+          )}
         </p>
-        <!-- Social Media Links -->
-        <div class="flex space-x-4 mt-4">
+        <p class="max-w-xs text-base/relaxed text-white/80">{company.slogan}</p>
+        <div class="flex flex-wrap items-center gap-3">
           {socialLinks.map(({ platform, url }) => (
-            <a 
-              href={url} 
-              target="_blank" 
+            <a
+              href={url}
+              target="_blank"
               rel="noopener noreferrer"
-              class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors duration-300"
+              class="inline-flex size-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white hover:text-brand-blue"
               aria-label={`Follow on ${platform}`}
             >
-              <Icon name={`mdi:${platform}`} class="w-6 h-6" />
+              <Icon name={`mdi:${platform}`} class="size-5" />
             </a>
           ))}
         </div>
       </div>
 
-      <!-- Quick Links -->
-      <div>
-        <h3 class="text-gray-900 dark:text-white font-semibold text-lg mb-4">Quick Links</h3>
-        <ul class="space-y-2">
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold uppercase tracking-wide text-white">Menu</h2>
+        <ul class="space-y-2 text-white/80">
           {footerMenu.map((item) => (
             <li>
-              <a 
-                href={item.url} 
-                class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors duration-300"
-              >
+              <a href={item.url} class="transition hover:text-white">
                 {item.name}
               </a>
             </li>
@@ -76,44 +62,52 @@ const recentPosts = allPosts
         </ul>
       </div>
 
-      <!-- Latest Posts -->
-      <div>
-        <h3 class="text-gray-900 dark:text-white font-semibold text-lg mb-4">Latest Posts</h3>
-        <div class="space-y-4">
-          {
-            recentPosts.map((post) => (
-              <a
-                href={`/${post.slug}/`}
-                class="flex gap-3 group items-start"
-              >
-                <div class="flex-grow">
-                  <h4 class="text-sm text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 line-clamp-2">
-                    {post.data.title}
-                  </h4>
-                </div>
-                {post.data.image && (
-                  <div class="flex-shrink-0 w-16">
-                    <Image
-                      src={post.data.image}
-                      alt={post.data.title}
-                      width={64}
-                      height={36}
-                      class="rounded w-full aspect-[16/9] object-cover"
-                    />
-                  </div>
-                )}
-              </a>
-            ))
-          }
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold uppercase tracking-wide text-white">Kontakt</h2>
+        <div class="space-y-2 text-white/80">
+          <a href={phone.href} class="block transition hover:text-white">
+            {phone.label}
+          </a>
+          <a href={email.href} class="block transition hover:text-white">
+            {email.label}
+          </a>
+          <p>
+            {address.street}
+            <br />
+            {address.zip} {address.city}
+            <br />
+            {address.country}
+          </p>
         </div>
       </div>
-    </div>
 
-    <!-- Copyright -->
-    <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-6 text-center">
-      <p class="text-gray-500 dark:text-gray-400 text-sm">
-        &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
-      </p>
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold uppercase tracking-wide text-white">Najnowsze wpisy</h2>
+        <ul class="space-y-3">
+          {
+            recentPosts.map((post) => (
+              <li>
+                <a
+                  href={`/${post.slug}/`}
+                  class="block rounded-xl border border-white/10 p-3 transition hover:border-white hover:bg-white/10"
+                >
+                  <p class="text-sm font-semibold text-white line-clamp-2">{post.data.title}</p>
+                  {post.data.date && (
+                    <span class="mt-1 block text-xs text-white/70">
+                      {new Date(post.data.date).toLocaleDateString("pl-PL")}
+                    </span>
+                  )}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/20 bg-brand-blue/90">
+    <div class="container py-6 text-center text-sm text-white/80">
+      &copy; {currentYear} {siteConfig.name}. Wszystkie prawa zastrzezone.
     </div>
   </div>
 </footer>

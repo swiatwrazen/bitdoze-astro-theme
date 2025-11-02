@@ -1,99 +1,214 @@
 ---
-import { getCollection } from 'astro:content';
-import Hero from '@components/widgets/Hero.astro';
-import Layout from '@layouts/Layout.astro';
-import PostCard from '@components/blog/PostCard.astro';
-import PopularTopics from '@components/blog/PopularTopics.astro';
-import { siteConfig } from '@config/site';
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/astropie/Section.astro";
+import Hero from "@components/astropie/Hero.astro";
+import Badge from "@components/astropie/Badge.astro";
+import Button from "@components/astropie/Button.astro";
+import ButtonCallUs from "@components/astropie/ButtonCallUs.astro";
 
-// Get all blog posts and sort by date (newest first)
-const posts = await getCollection('posts', ({ data }) => {
-  return !data.draft;
-});
+const heroParagraphs = [
+  "Podstawą każdego naszego wydarzenia jest konkretny pomysł przedstawiony dzieciom w jak najbardziej dostępny sposób z użyciem kreatywnych materiałów artystycznych.",
+  "Świat Wrażeń z wielką przyjemnością organizuje urodziny, imprezy tematyczne, warsztaty kreatywne, występy i turnieje – dla dzieci oraz całych rodzin.",
+];
 
-// Sort posts by date (newest first)
-const sortedPosts = posts.sort((a, b) => {
-  return new Date(b.data.date || 0).getTime() - new Date(a.data.date || 0).getTime();
-});
+const serviceHighlights = [
+  {
+    title: "Indywidualny scenariusz",
+    description: "Proponujemy program dopasowany do wieku, liczby uczestników oraz motywu przewodniego wydarzenia.",
+  },
+  {
+    title: "Animatorzy z doświadczeniem",
+    description: "Zespół, który łączy energię, profesjonalizm i naturalne podejście do dzieci – również podczas dużych eventów.",
+  },
+  {
+    title: "Atrakcje tematyczne",
+    description: "Papierowe show, fluo party, warsztaty plastyczne i spotkanie z Mikołajem – wybierz zestaw, który zachwyci gości.",
+  },
+  {
+    title: "Dekoracje i słodkości",
+    description: "Balony z helem, torty oraz candy bary pozwalają zamknąć całą oprawę w jednym zamówieniu.",
+  },
+];
 
-// Get the latest 6 posts for the homepage
-const latestPosts = sortedPosts.slice(0, 6);
+const commitments = [
+  "Obsługujemy urodziny, chrzciny, komunie, wesela i rodzinne przyjęcia.",
+  "Realizujemy animacje na piknikach firmowych, wydarzeniach świątecznych i dniach otwartych.",
+  "Działamy w Warszawie i okolicach – dojazd do 30 km w cenie animacji.",
+];
+
+const offerSections = [
+  {
+    title: "Animacje dla dzieci",
+    description:
+      "Urodziny w domu, ogrodzie lub sali zabaw – zapewniamy dynamiczne gry ruchowe, konkursy i opiekę nad grupą.",
+    href: "/animacja/animator-dla-dzieci-warszawa",
+  },
+  {
+    title: "Animacje tematyczne",
+    description:
+      "Superbohaterowie, księżniczki, Harry Potter, Minecraft i wiele innych scenariuszy dopasowanych do marzeń solenizanta.",
+    href: "/animacja/animacje-tematyczne",
+  },
+  {
+    title: "Atrakcje specjalne",
+    description:
+      "Papierowe show, fluo party, warsztaty kreatywne oraz spotkania z elfami i Mikołajem – idealne na eventy sezonowe.",
+    href: "/atrakcje-dla-dzieci/papierowe-show-silver-party",
+  },
+  {
+    title: "Dekoracje i słodki stół",
+    description:
+      "Balony z helem, aranżacje sali oraz torty urodzinowe, które podkreślą motyw przewodni przyjęcia.",
+    href: "/dekoracje-i-slodycze/balonow-z-helem-warszawa",
+  },
+];
+
+const recognitions = [
+  {
+    title: "Najlepsi Animatorzy 2025",
+    body: "Po raz drugi z rzędu otrzymaliśmy wyróżnienie Oferteo. Ponad 60 opinii i średnia 4.98/5 potwierdzają jakość naszych animacji.",
+    cta: {
+      label: "Zobacz opinie",
+      href: "https://swiatwrazen.oferteo.pl/",
+    },
+  },
+  {
+    title: "Partner Karty Warszawiaka",
+    body: "Posiadacze karty zyskują 10% zniżki na zamówienia indywidualne. Dołącz do mieszkańców stolicy, którzy nam zaufali.",
+    cta: {
+      label: "Sprawdź szczegóły",
+      href: "https://www.swiatwrazen.pl/karta-warszawiaka",
+    },
+  },
+];
 ---
 
-<Layout
-  title={siteConfig.name}
-  description={siteConfig.description}
-  wideContent={true}
->
-  <main class="w-full py-8">
-    <!-- Hero Section -->
-    <Hero /> 
-        <!-- Browse Categories Section -->
-        <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-          <div class="text-center mb-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">Explore Content</h2>
-            <p class="text-lg text-gray-700 dark:text-gray-300">
-              Browse our content by category, author, or tag
-            </p>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <a 
-              href="/categories/" 
-              class="flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700 text-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-600 dark:text-blue-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Categories</h3>
-              <p class="text-gray-600 dark:text-gray-400">Browse posts by topic</p>
-            </a>
-            
-            <a 
-              href="/authors/" 
-              class="flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700 text-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-600 dark:text-blue-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Authors</h3>
-              <p class="text-gray-600 dark:text-gray-400">Meet our content creators</p>
-            </a>
-            
-            <a 
-              href="/tags/" 
-              class="flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700 text-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-600 dark:text-blue-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-              </svg>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Tags</h3>
-              <p class="text-gray-600 dark:text-gray-400">Find content by specific topics</p>
-            </a>
-          </div>
-        </section>
-    <!-- Popular Topics Section -->
-    <PopularTopics tags={["Jamstack", "astro", "ai"]} postsPerTag={5} />
-    
-    <!-- Blog Posts Section -->
-    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Latest Articles</h2>
-        <a href="/blog/" class="text-blue-600 dark:text-blue-400 hover:underline font-medium flex items-center">
-          View All
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-          </svg>
-        </a>
+<Layout title="Świat Wrażeń" description="Animacje, urodziny i atrakcje dla dzieci w Warszawie.">
+  <Section class:list={["bg-surface-soft"]}>
+    <Hero>
+      <div slot="hero-content-left" class="max-w-2xl space-y-6">
+        <Badge title="Animatorzy dla dzieci w Warszawie" color="primary" />
+        <h1 class="text-4xl font-black leading-tight text-brand-navy sm:text-5xl">
+          Radość, śmiech i emocje, które zostają na zawsze!
+        </h1>
+        {heroParagraphs.map((paragraph) => (
+          <p class="text-lg text-brand-navy/80">{paragraph}</p>
+        ))}
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <Button url="/kontakt" color="primary">Zamów animatora</Button>
+          <Button url="/oferta" color="secondary">Zobacz ofertę</Button>
+          <ButtonCallUs />
+        </div>
       </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {latestPosts.map((post) => (
-          <PostCard post={post} />
+      <div slot="hero-content-right" class="mx-auto w-full max-w-md rounded-3xl bg-white/60 p-6 shadow-lg ring-1 ring-brand-blue/10">
+        <h3 class="text-xl font-semibold text-brand-navy">Dlaczego my?</h3>
+        <ul class="mt-4 space-y-3 text-brand-navy/80">
+          <li>✔ Doświadczeni animatorzy i autorskie scenariusze.</li>
+          <li>✔ Animacje w domu, plenerze i na eventach firmowych.</li>
+          <li>✔ Pakiety z dekoracjami, candy barem i dodatkowymi atrakcjami.</li>
+        </ul>
+      </div>
+    </Hero>
+  </Section>
+
+  <Section class:list={["bg-white"]}>
+    <div class="mx-auto max-w-4xl text-center">
+      <Badge title="Kompleksowa opieka nad wydarzeniem" color="secondary" />
+      <h2 class="text-3xl font-black text-brand-navy">Organizacja przyjęcia od A do Z</h2>
+      <p class="mt-4 text-lg text-brand-navy/80">
+        Od pierwszego pomysłu po ostatnią atrakcję – dbamy, by każde dziecko czuło magię swojego święta, a rodzice mogli
+        cieszyć się spokojem.
+      </p>
+    </div>
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      {serviceHighlights.map((item) => (
+        <article class="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-brand-blue/10">
+          <h3 class="text-xl font-semibold text-brand-blue">{item.title}</h3>
+          <p class="mt-3 text-brand-navy/80">{item.description}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <Section class:list={["bg-surface-subtle"]}>
+    <div class="mx-auto flex max-w-5xl flex-col gap-10 lg:flex-row lg:items-center">
+      <div class="flex-1 space-y-6">
+        <h2 class="text-3xl font-black text-brand-navy">Animacje pełne emocji i kreatywności</h2>
+        <p class="text-brand-navy/80">
+          Nasi animatorzy prowadzą zabawy ruchowe, konkursy tematyczne oraz programy dopasowane do wieku i zainteresowań dzieci.
+          Tworzymy środowisko, w którym każdy uczestnik czuje się zauważony i zaangażowany.
+        </p>
+        <p class="text-brand-navy/80">
+          Możesz rozbudować wydarzenie o dekoracje balonowe, warsztaty plastyczne lub candy bar – wszystko po to, by wspomnienia były jeszcze barwniejsze.
+        </p>
+      </div>
+      <aside class="flex-1 rounded-3xl bg-white p-6 shadow-lg ring-1 ring-brand-blue/10">
+        <h3 class="text-xl font-semibold text-brand-blue">Nasze zobowiązania</h3>
+        <ul class="mt-4 space-y-3 text-brand-navy/80">
+          {commitments.map((item) => (
+            <li>✔ {item}</li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </Section>
+
+  <Section class:list={["bg-white"]}>
+    <div class="mx-auto max-w-5xl">
+      <div class="mx-auto max-w-3xl text-center">
+        <Badge title="Poznaj naszą ofertę" color="primary" />
+        <h2 class="mt-2 text-3xl font-black text-brand-navy">Wybierz idealny pakiet animacji</h2>
+        <p class="mt-4 text-lg text-brand-navy/80">
+          Od domowych przyjęć po duże wydarzenia plenerowe – pomożemy Ci dopasować animacje, atrakcje i dekoracje do charakteru spotkania.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {offerSections.map((item) => (
+          <article class="flex h-full flex-col justify-between rounded-3xl bg-surface-soft p-6 shadow-lg ring-1 ring-brand-blue/10">
+            <div>
+              <h3 class="text-xl font-semibold text-brand-blue">{item.title}</h3>
+              <p class="mt-3 text-brand-navy/80">{item.description}</p>
+            </div>
+            <div class="mt-6">
+              <Button url={item.href} color="primary">Dowiedz się więcej</Button>
+            </div>
+          </article>
         ))}
       </div>
-    </section>
-    
+    </div>
+  </Section>
 
-  </main>
+  <Section class:list={["bg-brand-blue text-white"]} contain={false}>
+    <div class="container py-16 text-center">
+      <h2 class="text-3xl font-black">Gotowi na wyjątkową zabawę?</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-white/80">
+        Zadzwoń lub napisz – przygotujemy propozycję animacji dopasowaną do charakteru wydarzenia i liczby uczestników.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button url="/kontakt" color="secondary">Zapytaj o termin</Button>
+        <Button url="/cennik" color="primary">Sprawdź cennik</Button>
+      </div>
+    </div>
+  </Section>
+
+  <Section class:list={["bg-white"]}>
+    <div class="grid gap-6 lg:grid-cols-2">
+      {recognitions.map((item) => (
+        <article class="flex flex-col gap-4 rounded-3xl bg-surface-soft p-6 shadow-lg ring-1 ring-brand-blue/10">
+          <h3 class="text-2xl font-semibold text-brand-navy">{item.title}</h3>
+          <p class="text-brand-navy/80">{item.body}</p>
+          {item.cta && (
+            <div>
+              <a href={item.cta.href} class="inline-flex items-center gap-2 font-semibold text-brand-blue hover:text-brand-navy" target="_blank" rel="noopener">
+                {item.cta.label}
+                <svg class="size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.22 5.22a.75.75 0 0 1 1.06 0L14 12.94V7a.75.75 0 0 1 1.5 0v7a.75.75 0 0 1-.75.75h-7a.75.75 0 0 1 0-1.5h5.94L6.28 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </Section>
 </Layout>

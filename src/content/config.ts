@@ -1,4 +1,5 @@
 import { defineCollection, z } from "astro:content";
+import { file } from "astro/loaders";
 
 // Post collection schema
 const postsCollection = defineCollection({
@@ -72,10 +73,19 @@ const aboutCollection = defineCollection({
   }),
 });
 
+const reviewsCollection = defineCollection({
+  loader: file("src/data/reviews.json"),
+  schema: z.object({
+    author: z.string(),
+    review: z.string(),
+  }),
+});
+
 // Export collections
 export const collections = {
   posts: postsCollection,
   pages: pagesCollection,
   authors: authorsCollection,
   about: aboutCollection,
+  reviews: reviewsCollection,
 };

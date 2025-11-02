@@ -1,31 +1,27 @@
 import rss from '@astrojs/rss';
+import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '@config/site';
-import { formatDate } from '@utils/date';
 
-export async function GET(context) {
-  const posts = await getCollection('posts');
-  
-  // Sort posts by date (newest first)
-  const sortedPosts = posts.sort((a, b) => {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
-  });
+export async function GET(context: APIContext) {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+
+  const publishedPosts = posts
+    .filter((post): post is typeof post & { data: typeof post.data & { date: Date } } => post.data.date instanceof Date)
+    .sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0));
 
   return rss({
     title: siteConfig.name,
     description: siteConfig.description,
-    site: context.site || siteConfig.url,
-    items: sortedPosts.map((post) => ({
+    site: context.site ?? siteConfig.url,
+    items: publishedPosts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.date,
       description: post.data.description,
       link: `/${post.slug}/`,
       categories: post.data.categories || [],
-      // Optional custom data
-      customData: post.data.tags ? 
-        `<tags>${post.data.tags.join(',')}</tags>` : '',
+      customData: post.data.tags?.length ? `<tags>${post.data.tags.join(',')}</tags>` : undefined,
     })),
-    // Optional: customize the RSS output
     stylesheet: '/rss/styles.xsl',
   });
 }

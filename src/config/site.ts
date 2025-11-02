@@ -1,9 +1,9 @@
 // Site configuration
 export const siteConfig = {
   // Site details
-  name: "Astro Blog Theme",
-  description: "A modern, responsive blog theme for Astro with support for tags, categories, and series.",
-  url: "https://example.com",
+  name: "Świat Wrażeń",
+  description: "Animacje, urodziny tematyczne i atrakcje dla dzieci w Warszawie i okolicach.",
+  url: "https://www.swiatwrazen.pl",
   
   // Pagination settings
   postsPerPage: 10, // Number of posts per page
@@ -16,5 +16,5 @@ export const siteConfig = {
   },
   
   // Default social image
-  defaultImage: "/images/default-og.jpg",
+  defaultImage: "/images/swiat-wrazen/hero-kids.jpg",
 };

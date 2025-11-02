@@ -16,29 +16,29 @@ const slug = post.data.canonical
 const isPartOfSeries = series && Array.isArray(series) && series.length === 2;
 ---
 
-<article class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform duration-400 hover:transform hover:scale-[1.02]" >
+<article class="flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-brand-blue/10 transition duration-300 hover:-translate-y-1" >
   <!-- Post Image -->
   {image && (
-    <a href={`/${slug}/`} class="block overflow-hidden aspect-video">
+    <a href={`/${slug}/`} class="block aspect-video overflow-hidden">
       <Image 
         src={image} 
         alt={title} 
-        class="w-full h-full object-cover transition-transform duration-400hover:scale-105"
+        class="h-full w-full object-cover transition duration-300 hover:scale-105"
         width={640}
         height={360}
       />
     </a>
   )}
   
-  <div class="p-5">
-    <div class="flex flex-wrap gap-2 mb-2 items-center justify-between">
+  <div class="flex flex-1 flex-col p-6">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
       <!-- Categories -->
       {categories && categories.length > 0 && (
         <div class="flex flex-wrap gap-2">
           {categories.map((category: string) => (
             <a 
               href={`/categories/${category.toLowerCase()}/`} 
-              class="text-xs font-medium px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+              class="rounded-full bg-brand-blue/10 px-3 py-1 text-xs font-semibold text-brand-blue transition hover:bg-brand-blue/20"
             >
               {category}
             </a>
@@ -57,24 +57,24 @@ const isPartOfSeries = series && Array.isArray(series) && series.length === 2;
     </div>
     
     <!-- Title -->
-    <h2 class="text-xl font-bold mb-2 text-gray-900 dark:text-white line-clamp-2" >
-      <a href={`/${slug}/`} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+    <h2 class="text-2xl font-semibold text-brand-blue">
+      <a href={`/${slug}/`} class="line-clamp-2 transition hover:text-brand-blue/80">
         {title}
       </a>
     </h2>
     
     <!-- Description -->
     {description && (
-      <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+      <p class="mt-3 line-clamp-3 text-base text-gray-600">
         {description}
       </p>
     )}
     
-    <div class="flex items-center justify-between mt-4 text-sm text-gray-500 dark:text-gray-400">
+    <div class="mt-auto flex items-center justify-between pt-6 text-sm text-gray-500">
       <!-- Author -->
       {authors && authors.length > 0 && (
         <div class="flex items-center">
-          <Icon name="mdi:account" class="w-4 h-4 mr-1" />
+          <Icon name="mdi:account" class="mr-2 h-4 w-4 text-brand-blue" />
           <span>{authors[0]}</span>
         </div>
       )}
@@ -82,7 +82,7 @@ const isPartOfSeries = series && Array.isArray(series) && series.length === 2;
       <!-- Date -->
       {date && (
         <div class="flex items-center">
-          <Icon name="mdi:calendar" class="w-4 h-4 mr-1" />
+          <Icon name="mdi:calendar" class="mr-2 h-4 w-4 text-brand-blue" />
           <time datetime={date.toISOString()}>
             {formatDate(date)}
           </time>

@@ -1,34 +1,71 @@
 ---
 import { getCollection } from 'astro:content';
+import Layout from '@layouts/Layout.astro';
 import PostLayout from '@layouts/PostLayout.astro';
-// Import all widget components for MDX files
 import * as MarkdownComponents from '@layouts/components/MarkdownComponents.astro';
 
-// Get all blog posts
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
-  
-  return posts.map(post => {
-    // Extract the slug from the canonical URL or use the file name
-    const slug = post.data.canonical 
-      ? new URL(post.data.canonical).pathname.split('/').filter(Boolean).pop()
+  const pages = await getCollection('pages');
+
+  const postPaths = posts.map((post) => {
+    const slug = post.data.canonical
+      ? new URL(post.data.canonical).pathname.split('/').filter(Boolean).pop() ?? post.slug
       : post.slug;
-      
+
     return {
       params: { slug },
-      props: { post },
+      props: { entry: post, collection: 'posts' as const },
     };
   });
+
+  const pagePaths = pages
+    .map((page) => {
+      if (!page.slug) return null;
+      const normalizedSlug = page.slug.replace(/^\/+|\/+$/g, '');
+      if (!normalizedSlug || normalizedSlug === 'home' || normalizedSlug === '404') return null;
+      return {
+        params: { slug: normalizedSlug },
+        props: { entry: page, collection: 'pages' as const },
+      };
+    })
+    .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
+
+  return [...postPaths, ...pagePaths];
 }
 
-const { post } = Astro.props;
-// Pass all widget components to MDX content
-const { Content, headings } = await post.render();
+const { entry, collection } = Astro.props;
+let title = '';
+let description = '';
+let image: string | undefined;
+let Content;
+let headings;
 
-// Make all components available to MDX content
-const components = MarkdownComponents;
+if (collection === 'posts') {
+  const rendered = await entry.render();
+  ({ Content, headings } = rendered);
+} else {
+  const rendered = await entry.render();
+  ({ Content } = rendered);
+  ({ title = '', description = '', image } = entry.data);
+}
 ---
 
-<PostLayout post={post} headings={headings}>
-  <Content components={components} />
-</PostLayout>
+{collection === 'posts' ? (
+  <PostLayout post={entry} headings={headings}>
+    <Content components={MarkdownComponents} />
+  </PostLayout>
+) : (
+  <Layout title={title} description={description} image={image}>
+    <section class="py-12">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <header class="mb-10">
+          <h1 class="text-3xl font-bold text-brand-navy sm:text-4xl">{title}</h1>
+        </header>
+        <div class="prose prose-lg text-brand-navy/90 dark:prose-invert max-w-none">
+          <Content components={MarkdownComponents} />
+        </div>
+      </div>
+    </section>
+  </Layout>
+)}

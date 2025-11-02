@@ -1,0 +1,15 @@
+---
+import phoneIcon from "@assets/icons/phone.svg";
+import { phone } from "@config/company";
+---
+
+<a
+	href={phone.href}
+	class="not-prose flex items-center gap-x-3 hover:-translate-y-1 hover:-rotate-1 transition duration-300"
+>
+	<img src={phoneIcon.src} alt="Phone" class="size-12 rounded-full bg-brand-yellow p-2.5" loading="lazy" />
+	<div>
+		<p class="text-base/4">Call us</p>
+		<span class="text-brand-blue font-bold text-base/6">{phone.label}</span>
+	</div>
+</a>

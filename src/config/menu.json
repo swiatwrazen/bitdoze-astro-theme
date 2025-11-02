@@ -1,63 +1,49 @@
 {
   "main": [
+    { "name": "Świat Wrażeń", "url": "/" },
+    { "name": "Oferta", "url": "/oferta" },
     {
-      "name": "Home",
-      "url": "/"
-    },
-    {
-      "name": "About",
-      "url": "/about/"
-    },
-    {
-      "name": "Series",
-      "url": "/series/"
-    },
-
-    {
-      "name": "Pages",
-      "url": "",
+      "name": "Animacja",
+      "url": "/animacja/animator-dla-dzieci-warszawa",
       "hasChildren": true,
       "children": [
-        {
-          "name": "Authors",
-          "url": "/authors/"
-        },
-        {
-          "name": "Categories",
-          "url": "/categories/"
-        },
-        {
-          "name": "Tags",
-          "url": "/tags/"
-        },
-        {
-          "name": "About",
-          "url": "/about/"
-        },
-        {
-          "name": "Privacy Policy",
-          "url": "/privacy/"
-        }
+        { "name": "Animator dla dzieci", "url": "/animacja/animator-dla-dzieci-warszawa" },
+        { "name": "Animacje tematyczne", "url": "/animacja/animacje-tematyczne" },
+        { "name": "Pakiety urodzinowe", "url": "/animacja/pakiety-urodzinowe" },
+        { "name": "Animatorzy na wesele", "url": "/animacja/animatorzy-dla-dzieci-na-wesele" },
+        { "name": "Animator na komunię", "url": "/animacja/animator-na-komunie" },
+        { "name": "Animator na chrzciny", "url": "/animacja/animator-na-chrzciny-atrakcja-dla-dzieci" },
+        { "name": "Wizyta Mikołaja i Elfa", "url": "/animacja/wizyta-mikolaja-do-domu-warszawa" }
       ]
     },
-
     {
-      "name": "Contact",
-      "url": "/contact/"
-    }
+      "name": "Atrakcje dla dzieci",
+      "url": "/atrakcje-dla-dzieci/papierowe-show-silver-party",
+      "hasChildren": true,
+      "children": [
+        { "name": "Papierowe show", "url": "/atrakcje-dla-dzieci/papierowe-show-silver-party" },
+        { "name": "Fluo / Neon Party", "url": "/atrakcje-dla-dzieci/fluo-party-dla-dzieci" },
+        { "name": "Warsztaty plastyczne", "url": "/atrakcje-dla-dzieci/warsztaty-plastyczne-dla-dzieci" }
+      ]
+    },
+    {
+      "name": "Dekoracje i słodycze",
+      "url": "/dekoracje-i-slodycze/balonow-z-helem-warszawa",
+      "hasChildren": true,
+      "children": [
+        { "name": "Balony z helem", "url": "/dekoracje-i-slodycze/balonow-z-helem-warszawa" },
+        { "name": "Torty urodzinowe", "url": "/dekoracje-i-slodycze/tort-urodzinowy" }
+      ]
+    },
+    { "name": "Cennik", "url": "/cennik" },
+    { "name": "Kontakt", "url": "/kontakt" },
+    { "name": "O nas", "url": "/o-nas" }
   ],
   "footer": [
-    {
-      "name": "About",
-      "url": "/about/"
-    },
-    {
-      "name": "Contact",
-      "url": "/contact/"
-    },
-    {
-      "name": "Privacy Policy",
-      "url": "/privacy/"
-    }
+    { "name": "Karta Warszawiaka", "url": "/karta-warszawiaka" },
+    { "name": "Pytania i odpowiedzi", "url": "/pytania-i-odpowiedzi" },
+    { "name": "Referencje", "url": "/referencje" },
+    { "name": "Polityka prywatności", "url": "/polityka-prywatnosci" },
+    { "name": "Regulamin", "url": "/regulamin" }
   ]
 }
