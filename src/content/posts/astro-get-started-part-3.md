@@ -4,7 +4,7 @@ meta_title: "Getting Started with Astro - Part 3: Deployment and Advanced Featur
 description: "Learn how to deploy your Astro site, optimize performance, and leverage advanced features for production-ready websites."
 date: 2023-11-03
 image: "../../assets/images/astro-deployment.svg"
-authors: ["dragos"]
+authors: ["swiatwrazen"]
 categories: ["Web Development"]
 tags: ["astro", "jamstack", "deployment", "optimization"]
 series: ["Astro Get Started", "3"]

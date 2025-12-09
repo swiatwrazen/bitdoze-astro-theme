@@ -23,6 +23,7 @@ interface Props {
   };
   tags?: string[];
   categories?: string[];
+  breadcrumbs?: Array<{ name: string; url: string }>;
 }
 
 const {
@@ -38,6 +39,7 @@ const {
   author,
   tags,
   categories,
+  breadcrumbs,
 } = Astro.props;
 
 const mainClasses = ["flex-1"];
@@ -70,6 +72,7 @@ const wrapperClass = "mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8";
       author={author}
       tags={tags}
       categories={categories}
+      breadcrumbs={breadcrumbs}
     />
   </head>
   <body class="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-white">

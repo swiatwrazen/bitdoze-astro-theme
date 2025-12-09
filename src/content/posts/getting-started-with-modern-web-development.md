@@ -4,7 +4,7 @@ meta_title: "Modern Web Development Guide for Beginners"
 description: "Learn the fundamentals of modern web development with this comprehensive guide covering HTML, CSS, JavaScript, and popular frameworks."
 date: 2023-06-15
 image: "../../assets/images/web-development.svg"
-authors: ["dragos"]
+authors: ["swiatwrazen"]
 categories: ["Web Development"]
 tags: ["javascript", "html", "css", "frameworks", "beginners"]
 ---

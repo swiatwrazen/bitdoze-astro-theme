@@ -4,7 +4,7 @@ meta_title: "Getting Started with Data Science: A Complete Guide"
 description: "Learn the fundamentals of data science, including statistics, programming, and machine learning in this comprehensive guide for beginners."
 date: 2023-08-10
 image: "../../assets/images/data-science.svg"
-authors: ["dragos"]
+authors: ["swiatwrazen"]
 categories: ["Data Science"]
 tags: ["python", "machine-learning", "statistics", "data-analysis", "ai"]
 ---
