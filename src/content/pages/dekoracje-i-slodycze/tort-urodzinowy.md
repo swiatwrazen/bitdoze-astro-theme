@@ -1,6 +1,6 @@
 ---
 title: "Torty urodzinowe i candy bar"
-slug: "/dekoracje-i-slodycze/tort-urodzinowy"
+slug: "/dekoracje-i-słodycze/tort-urodzinowy"
 description: "Personalizowane torty, candy bary i słodkie stoły dla dzieci w Warszawie. Mini deserki, ciastka i przekąski na jeden kęs."
 ---
 

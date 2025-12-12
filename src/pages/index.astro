@@ -1,72 +1,98 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Section from "@components/astropie/Section.astro";
-import Hero from "@components/astropie/Hero.astro";
 import Badge from "@components/astropie/Badge.astro";
 import Button from "@components/astropie/Button.astro";
 import ButtonCallUs from "@components/astropie/ButtonCallUs.astro";
+import LandingHero from "@components/landing/Hero.astro";
+import TrustSection from "@components/landing/TrustSection.astro";
+import PricePackageCard from "@components/landing/PricePackageCard.astro";
+import { pricePackages } from "@data/pricing";
 
-const heroParagraphs = [
-  "Podstawą każdego naszego wydarzenia jest konkretny pomysł przedstawiony dzieciom w jak najbardziej dostępny sposób z użyciem kreatywnych materiałów artystycznych.",
-  "Świat Wrażeń z wielką przyjemnością organizuje urodziny, imprezy tematyczne, warsztaty kreatywne, występy i turnieje – dla dzieci oraz całych rodzin.",
-];
-
-const serviceHighlights = [
+const benefits = [
   {
     title: "Indywidualny scenariusz",
-    description: "Proponujemy program dopasowany do wieku, liczby uczestników oraz motywu przewodniego wydarzenia.",
+    description:
+      "Proponujemy zabawy i atrakcje dopasowane do wieku, liczby uczestników oraz motywu przewodniego wydarzenia.",
   },
   {
     title: "Animatorzy z doświadczeniem",
-    description: "Zespół, który łączy energię, profesjonalizm i naturalne podejście do dzieci – również podczas dużych eventów.",
+    description:
+      "Zespół pedagogów i artystów, którzy angażują dzieci i dbają o atmosferę nawet podczas dużych eventów.",
   },
   {
     title: "Atrakcje tematyczne",
-    description: "Papierowe show, fluo party, warsztaty plastyczne i spotkanie z Mikołajem – wybierz zestaw, który zachwyci gości.",
+    description:
+      "Papierowe show, fluo party, warsztaty kreatywne, superbohaterowie i księżniczki – łączymy je w gotowe pakiety.",
   },
   {
-    title: "Dekoracje i słodkości",
-    description: "Balony z helem, torty oraz candy bary pozwalają zamknąć całą oprawę w jednym zamówieniu.",
+    title: "Kompletna obsługa",
+    description:
+      "Dekoracje, candy bar, nagłośnienie oraz koordynacja dnia wydarzenia. Rodzice mogą cieszyć się chwilą.",
+  },
+];
+
+const processSteps = [
+  {
+    title: "Konsultacja i wywiad",
+    description: "Krótka rozmowa telefoniczna lub formularz online, w którym opisujesz potrzeby i marzenia dziecka.",
+    meta: "15 minut",
+  },
+  {
+    title: "Propozycja programu",
+    description: "W ciągu 24 godzin przesyłamy dopasowane pakiety, kosztorys i rekomendację atrakcji dodatkowych.",
+    meta: "24 godziny",
+  },
+  {
+    title: "Koordynacja i logistyka",
+    description: "Rezerwujemy animatorów, dekoracje, sprzęt oraz potwierdzamy harmonogram z miejscem wydarzenia.",
+    meta: "Do 3 dni przed",
+  },
+  {
+    title: "Prowadzenie animacji",
+    description: "Animator przyjeżdża minimum 30 minut wcześniej, przygotowuje stanowisko i prowadzi zabawy od A do Z.",
+    meta: "Dzień wydarzenia",
   },
 ];
 
 const commitments = [
   "Obsługujemy urodziny, chrzciny, komunie, wesela i rodzinne przyjęcia.",
-  "Realizujemy animacje na piknikach firmowych, wydarzeniach świątecznych i dniach otwartych.",
-  "Działamy w Warszawie i okolicach – dojazd do 30 km w cenie animacji.",
+  "Realizujemy animacje na piknikach firmowych, integracjach i wydarzeniach szkolnych.",
+  "Działamy w Warszawie i do 30 km wokół stolicy – dojazd w cenie.",
+  "Zapewniamy polisę OC oraz umowę potwierdzającą zakres usługi.",
 ];
 
 const offerSections = [
   {
     title: "Animacje dla dzieci",
     description:
-      "Urodziny w domu, ogrodzie lub sali zabaw – zapewniamy dynamiczne gry ruchowe, konkursy i opiekę nad grupą.",
+      "Urodziny w domu, ogrodzie lub sali zabaw – dynamiczne gry ruchowe, konkursy i opieka nad grupą.",
     href: "/animacja/animator-dla-dzieci-warszawa",
   },
   {
     title: "Animacje tematyczne",
     description:
-      "Superbohaterowie, księżniczki, Harry Potter, Minecraft i wiele innych scenariuszy dopasowanych do marzeń solenizanta.",
+      "Superbohaterowie, księżniczki, Harry Potter, Minecraft i wiele innych motywów dopasowanych do solenizanta.",
     href: "/animacja/animacje-tematyczne",
   },
   {
     title: "Atrakcje specjalne",
     description:
-      "Papierowe show, fluo party, warsztaty kreatywne oraz spotkania z elfami i Mikołajem – idealne na eventy sezonowe.",
+      "Papierowe show, fluo party, warsztaty kreatywne oraz spotkania sezonowe z Mikołajem lub elfami.",
     href: "/atrakcje-dla-dzieci/papierowe-show-silver-party",
   },
   {
     title: "Dekoracje i słodki stół",
     description:
-      "Balony z helem, aranżacje sali oraz torty urodzinowe, które podkreślą motyw przewodni przyjęcia.",
-    href: "/dekoracje-i-slodycze/balonow-z-helem-warszawa",
+      "Balony z helem, torty, candy bary oraz aranżacje przestrzeni, które podkreślają motyw przewodni przyjęcia.",
+    href: "/dekoracje-i-słodycze/balonow-z-helem-warszawa",
   },
 ];
 
 const recognitions = [
   {
     title: "Najlepsi Animatorzy 2025",
-    body: "Po raz drugi z rzędu otrzymaliśmy wyróżnienie Oferteo. Ponad 60 opinii i średnia 4.98/5 potwierdzają jakość naszych animacji.",
+    body: "Po raz drugi otrzymaliśmy wyróżnienie Oferteo. Ponad 60 opinii i średnia 4.98/5 potwierdzają jakość naszych animacji.",
     cta: {
       label: "Zobacz opinie",
       href: "https://swiatwrazen.oferteo.pl/",
@@ -74,77 +100,85 @@ const recognitions = [
   },
   {
     title: "Partner Karty Warszawiaka",
-    body: "Posiadacze karty zyskują 10% zniżki na zamówienia indywidualne. Dołącz do mieszkańców stolicy, którzy nam zaufali.",
+    body: "Posiadacze karty zyskują 10% zniżki na zamówienia indywidualne. Dołącz do rodziców, którzy nam zaufali.",
     cta: {
       label: "Sprawdź szczegóły",
       href: "https://www.swiatwrazen.pl/karta-warszawiaka",
     },
   },
 ];
+
+const popularPackages = pricePackages.slice(0, 3);
 ---
 
-<Layout title="Świat Wrażeń" description="Animacje, urodziny i atrakcje dla dzieci w Warszawie.">
-  <Section class:list={["bg-surface-soft"]}>
-    <Hero>
-      <div slot="hero-content-left" class="max-w-2xl space-y-6">
-        <Badge title="Animatorzy dla dzieci w Warszawie" color="primary" />
-        <h1 class="text-4xl font-black leading-tight text-brand-navy sm:text-5xl">
-          Radość, śmiech i emocje, które zostają na zawsze!
-        </h1>
-        {heroParagraphs.map((paragraph) => (
-          <p class="text-lg text-brand-navy/80">{paragraph}</p>
-        ))}
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Button url="/kontakt" color="primary">Zamów animatora</Button>
-          <Button url="/oferta" color="secondary">Zobacz ofertę</Button>
-          <ButtonCallUs />
-        </div>
-      </div>
-      <div slot="hero-content-right" class="mx-auto w-full max-w-md rounded-3xl bg-white/60 p-6 shadow-lg ring-1 ring-brand-blue/10">
-        <h3 class="text-xl font-semibold text-brand-navy">Dlaczego my?</h3>
-        <ul class="mt-4 space-y-3 text-brand-navy/80">
-          <li>✔ Doświadczeni animatorzy i autorskie scenariusze.</li>
-          <li>✔ Animacje w domu, plenerze i na eventach firmowych.</li>
-          <li>✔ Pakiety z dekoracjami, candy barem i dodatkowymi atrakcjami.</li>
-        </ul>
-      </div>
-    </Hero>
-  </Section>
+<Layout title="Świat Wrażeń" description="Animacje, urodziny i atrakcje dla dzieci w Warszawie." wideContent={true}>
+  <LandingHero />
+  <TrustSection />
 
-  <Section class:list={["bg-white"]}>
-    <div class="mx-auto max-w-4xl text-center">
-      <Badge title="Kompleksowa opieka nad wydarzeniem" color="secondary" />
-      <h2 class="text-3xl font-black text-brand-navy">Organizacja przyjęcia od A do Z</h2>
-      <p class="mt-4 text-lg text-brand-navy/80">
-        Od pierwszego pomysłu po ostatnią atrakcję – dbamy, by każde dziecko czuło magię swojego święta, a rodzice mogli
-        cieszyć się spokojem.
+  <Section>
+    <div class="mx-auto max-w-3xl text-center">
+      <Badge title="Dlaczego rodzice nas wybierają" color="primary" />
+      <h2 class="mt-4 text-3xl font-black text-sw-text">Usługa dopasowana do potrzeb Twojej rodziny</h2>
+      <p class="mt-4 text-lg text-sw-muted">
+        Analizujemy wiek dzieci, liczbę gości i budżet, aby przestawić konkretny, przejrzysty plan przyjęcia.
       </p>
     </div>
     <div class="mt-10 grid gap-6 md:grid-cols-2">
-      {serviceHighlights.map((item) => (
-        <article class="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-brand-blue/10">
-          <h3 class="text-xl font-semibold text-brand-blue">{item.title}</h3>
-          <p class="mt-3 text-brand-navy/80">{item.description}</p>
+      {benefits.map((item) => (
+        <article class="rounded-lg border border-sw-border bg-sw-card p-6 shadow-card">
+          <h3 class="text-xl font-medium text-sw-text">{item.title}</h3>
+          <p class="mt-3 text-sw-muted">{item.description}</p>
         </article>
       ))}
     </div>
   </Section>
 
-  <Section class:list={["bg-surface-subtle"]}>
-    <div class="mx-auto flex max-w-5xl flex-col gap-10 lg:flex-row lg:items-center">
-      <div class="flex-1 space-y-6">
-        <h2 class="text-3xl font-black text-brand-navy">Animacje pełne emocji i kreatywności</h2>
-        <p class="text-brand-navy/80">
-          Nasi animatorzy prowadzą zabawy ruchowe, konkursy tematyczne oraz programy dopasowane do wieku i zainteresowań dzieci.
-          Tworzymy środowisko, w którym każdy uczestnik czuje się zauważony i zaangażowany.
+  <Section>
+    <div class="mx-auto max-w-3xl text-center">
+      <Badge title="Popularne pakiety" color="secondary" />
+      <h2 class="mt-4 text-3xl font-black text-sw-text">Transparentne pakiety animacji</h2>
+      <p class="mt-4 text-lg text-sw-muted">
+        Każdy pakiet obejmuje dojazd, zestaw muzyczny i scenariusz dopasowany do wieku dzieci. Rozszerzysz go o dodatki z sekcji
+        „Dodatkowe usługi”.
+      </p>
+    </div>
+    <div class="mt-10 grid gap-6 lg:grid-cols-3">
+      {popularPackages.map((pkg) => (
+        <PricePackageCard pkg={pkg} featured={pkg.id === "birthday-premium"} />
+      ))}
+    </div>
+    <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <Button url="/cennik" color="primary">Zobacz pełny cennik</Button>
+      <a href="/#konfigurator" class="font-medium text-sw-primary hover:text-sw-text">Skonfiguruj przyjęcie</a>
+    </div>
+  </Section>
+
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-[3fr,2fr]">
+      <div>
+        <Badge title="Jak wygląda współpraca" color="secondary" />
+        <h2 class="mt-4 text-3xl font-black text-sw-text">Prosty proces bez zaskoczeń</h2>
+        <p class="mt-4 text-sw-muted">
+          Łączymy konsultacje online z autorskimi scenariuszami, aby już na etapie wyceny pokazać przebieg animacji i koszty dodatkowych atrakcji.
         </p>
-        <p class="text-brand-navy/80">
-          Możesz rozbudować wydarzenie o dekoracje balonowe, warsztaty plastyczne lub candy bar – wszystko po to, by wspomnienia były jeszcze barwniejsze.
-        </p>
+        <ol class="mt-8 space-y-6">
+          {processSteps.map((step, index) => (
+            <li class="flex gap-4 rounded-lg bg-white p-5 shadow-card ring-1 ring-sw-border/50">
+              <div class="flex size-10 items-center justify-center rounded-lg bg-sw-primary/10 text-base font-bold text-sw-primary">
+                {(index + 1).toString().padStart(2, "0")}
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium uppercase tracking-wide text-sw-primary">{step.meta}</p>
+                <h3 class="text-xl font-medium text-sw-text">{step.title}</h3>
+                <p class="mt-2 text-sw-muted">{step.description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
-      <aside class="flex-1 rounded-3xl bg-white p-6 shadow-lg ring-1 ring-brand-blue/10">
-        <h3 class="text-xl font-semibold text-brand-blue">Nasze zobowiązania</h3>
-        <ul class="mt-4 space-y-3 text-brand-navy/80">
+      <aside class="rounded-lg bg-white p-6 shadow-card ring-1 ring-sw-border/50">
+        <h3 class="text-2xl font-medium text-sw-text">Co otrzymujesz w pakiecie</h3>
+        <ul class="mt-4 space-y-3 text-sw-muted">
           {commitments.map((item) => (
             <li>✔ {item}</li>
           ))}
@@ -154,61 +188,67 @@ const recognitions = [
   </Section>
 
   <Section class:list={["bg-white"]}>
-    <div class="mx-auto max-w-5xl">
-      <div class="mx-auto max-w-3xl text-center">
-        <Badge title="Poznaj naszą ofertę" color="primary" />
-        <h2 class="mt-2 text-3xl font-black text-brand-navy">Wybierz idealny pakiet animacji</h2>
-        <p class="mt-4 text-lg text-brand-navy/80">
-          Od domowych przyjęć po duże wydarzenia plenerowe – pomożemy Ci dopasować animacje, atrakcje i dekoracje do charakteru spotkania.
-        </p>
-      </div>
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        {offerSections.map((item) => (
-          <article class="flex h-full flex-col justify-between rounded-3xl bg-surface-soft p-6 shadow-lg ring-1 ring-brand-blue/10">
-            <div>
-              <h3 class="text-xl font-semibold text-brand-blue">{item.title}</h3>
-              <p class="mt-3 text-brand-navy/80">{item.description}</p>
-            </div>
-            <div class="mt-6">
-              <Button url={item.href} color="primary">Dowiedz się więcej</Button>
-            </div>
+    <div class="mx-auto max-w-4xl text-center">
+      <Badge title="Oferta" color="primary" />
+      <h2 class="mt-4 text-3xl font-black text-sw-text">Pakiety animacji i atrakcji</h2>
+      <p class="mt-4 text-lg text-sw-muted">
+        Wybierz gotowy zestaw lub połącz elementy według własnego pomysłu. Każdą ofertę możemy rozszerzyć o dekoracje i obsługę słodkiego stołu.
+      </p>
+    </div>
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      {offerSections.map((item) => (
+        <article class="flex h-full flex-col justify-between rounded-lg border border-sw-border bg-sw-card p-6 shadow-card">
+          <div>
+            <h3 class="text-xl font-medium text-sw-primary">{item.title}</h3>
+            <p class="mt-3 text-sw-muted">{item.description}</p>
+          </div>
+          <div class="mt-6">
+            <Button url={item.href} color="primary">Dowiedz się więcej</Button>
+          </div>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <Section>
+    <div class="rounded-lg border border-sw-border bg-sw-card p-8 shadow-card">
+      <div class="grid gap-8 lg:grid-cols-2">
+        {recognitions.map((item) => (
+          <article class="flex flex-col gap-4">
+            <h3 class="text-2xl font-medium text-sw-text">{item.title}</h3>
+            <p class="text-sw-muted">{item.body}</p>
+            <a
+              href={item.cta.href}
+              class="inline-flex items-center gap-2 font-medium text-sw-primary hover:text-sw-text"
+              target="_blank"
+              rel="noopener"
+            >
+              {item.cta.label}
+              <svg class="size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.22 5.22a.75.75 0 0 1 1.06 0L14 12.94V7a.75.75 0 0 1 1.5 0v7a.75.75 0 0 1-.75.75h-7a.75.75 0 0 1 0-1.5h5.94L6.28 6.28a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
           </article>
         ))}
       </div>
     </div>
   </Section>
 
-  <Section class:list={["bg-brand-blue text-white"]} contain={false}>
-    <div class="container py-16 text-center">
-      <h2 class="text-3xl font-black">Gotowi na wyjątkową zabawę?</h2>
+  <Section class:list={["bg-sw-primary text-white"]} contain={false}>
+    <div class="mx-auto w-full max-w-6xl px-4 py-section text-center">
+      <h2 class="text-3xl font-black text-white">Porozmawiajmy o Twoim wydarzeniu</h2>
       <p class="mx-auto mt-4 max-w-2xl text-white/80">
-        Zadzwoń lub napisz – przygotujemy propozycję animacji dopasowaną do charakteru wydarzenia i liczby uczestników.
+        Zadzwoń lub napisz, aby ustalić termin animacji i otrzymać wstępny kosztorys. Możemy zacząć od konfiguratora lub szybkiej rozmowy telefonicznej.
       </p>
       <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-        <Button url="/kontakt" color="secondary">Zapytaj o termin</Button>
+        <Button url="/kontakt" color="secondary">Wypełnij formularz</Button>
         <Button url="/cennik" color="primary">Sprawdź cennik</Button>
+        <ButtonCallUs />
       </div>
-    </div>
-  </Section>
-
-  <Section class:list={["bg-white"]}>
-    <div class="grid gap-6 lg:grid-cols-2">
-      {recognitions.map((item) => (
-        <article class="flex flex-col gap-4 rounded-3xl bg-surface-soft p-6 shadow-lg ring-1 ring-brand-blue/10">
-          <h3 class="text-2xl font-semibold text-brand-navy">{item.title}</h3>
-          <p class="text-brand-navy/80">{item.body}</p>
-          {item.cta && (
-            <div>
-              <a href={item.cta.href} class="inline-flex items-center gap-2 font-semibold text-brand-blue hover:text-brand-navy" target="_blank" rel="noopener">
-                {item.cta.label}
-                <svg class="size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M5.22 5.22a.75.75 0 0 1 1.06 0L14 12.94V7a.75.75 0 0 1 1.5 0v7a.75.75 0 0 1-.75.75h-7a.75.75 0 0 1 0-1.5h5.94L6.28 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                </svg>
-              </a>
-            </div>
-          )}
-        </article>
-      ))}
     </div>
   </Section>
 </Layout>

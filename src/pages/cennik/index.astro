@@ -1,0 +1,102 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/astropie/Section.astro";
+import Badge from "@components/astropie/Badge.astro";
+import Button from "@components/astropie/Button.astro";
+import PricePackageCard from "@components/landing/PricePackageCard.astro";
+import AddonCard from "@components/landing/AddonCard.astro";
+import { pricePackages, addons, exampleScenarios } from "@data/pricing";
+
+const pageTitle = "Cennik animacji i atrakcji";
+const pageDescription =
+  "Transparentne pakiety animacji i dodatkowe usługi dla przyjęć dziecięcych w Warszawie. Sprawdź, co zawiera każda opcja i wybierz najlepszą dla Twojego wydarzenia.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <Section>
+    <div class="mx-auto max-w-3xl text-center space-y-4">
+      <Badge title="Świat Wrażeń" color="primary" />
+      <h1 class="text-4xl font-black text-sw-text">{pageTitle}</h1>
+      <p class="text-lg text-sw-muted">
+        Każdy pakiet obejmuje dojazd w obrębie Warszawy, zestaw muzyczny, scenariusz dopasowany do wieku oraz pełną opiekę animatorów.
+        Poniższe ceny to punkt wyjścia – dodatkowe atrakcje i wydłużenie czasu animacji wyceniamy indywidualnie.
+      </p>
+    </div>
+    <div class="mt-12 grid gap-6 lg:grid-cols-2">
+      {pricePackages.map((pkg) => (
+        <PricePackageCard pkg={pkg} featured={pkg.id === "birthday-premium"} />
+      ))}
+    </div>
+  </Section>
+
+  <Section>
+    <div class="mx-auto max-w-3xl text-center space-y-4">
+      <Badge title="Dodatki do pakietów" color="secondary" />
+      <h2 class="text-3xl font-black text-sw-text">Dodatkowe usługi</h2>
+      <p class="text-lg text-sw-muted">
+        Rozszerz animacje o efekty specjalne, warsztaty lub oprawę słodką. Każdy dodatek można połączyć z dowolnym pakietem.
+      </p>
+    </div>
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {addons.map((addon) => (
+        <AddonCard addon={addon} />
+      ))}
+    </div>
+  </Section>
+
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div class="rounded-lg border border-sw-border bg-sw-card p-8 shadow-card">
+        <h3 class="text-2xl font-bold text-sw-text">Skonfiguruj przyjęcie online</h3>
+        <p class="mt-3 text-sw-muted">
+          W kilka kroków określisz liczbę dzieci, lokalizację oraz dodatkowe atrakcje. Na podstawie konfiguracji wrócimy
+          z dokładną wyceną i dostępnościami.
+        </p>
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="/#konfigurator"
+            class="inline-flex items-center justify-center rounded-lg bg-sw-primary px-5 py-3 text-base font-medium text-white transition-colors hover:bg-sw-primaryDark"
+          >
+            Skonfiguruj przyjęcie
+          </a>
+          <Button url="/kontakt" color="secondary">Porozmawiaj z nami</Button>
+        </div>
+        <p class="mt-4 text-sm text-sw-muted">
+          Preferujesz rozmowę telefoniczną? Zadzwoń do nas – przygotujemy propozycję pakietu podczas jednej konsultacji.
+        </p>
+      </div>
+      <div class="rounded-lg border border-sw-border bg-sw-card p-8 shadow-card">
+        <h3 class="text-2xl font-bold text-sw-text">Przejrzyste zasady</h3>
+        <ul class="mt-4 space-y-3 text-sw-muted">
+          <li>✔ Dojazd w obrębie Warszawy w cenie pakietów do 120 minut.</li>
+          <li>✔ Każde kolejne 10–15 dzieci rekomendujemy obsłużyć dodatkowym animatorem.</li>
+          <li>✔ Zaliczka rezerwacyjna: 20% wartości pakietu, płatna po akceptacji oferty.</li>
+          <li>✔ Rabaty dla szkół i firm przy cyklicznych wydarzeniach.</li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section>
+    <div class="mx-auto max-w-3xl text-center space-y-4">
+      <Badge title="Gotowe scenariusze" color="primary" />
+      <h2 class="text-3xl font-black text-sw-text">Ulubione zestawy dzieci i rodziców</h2>
+      <p class="text-lg text-sw-muted">
+        Wybierz sprawdzone scenariusze lub potraktuj je jako inspirację do stworzenia własnego programu.
+      </p>
+    </div>
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      {exampleScenarios.map((scenario) => (
+        <article class="rounded-lg border border-sw-border bg-sw-card p-6 shadow-card">
+          <h3 class="text-2xl font-medium text-sw-text">{scenario.title}</h3>
+          <p class="mt-2 text-sw-muted">{scenario.description}</p>
+          <ul class="mt-4 space-y-2 text-sm text-sw-muted">
+            {scenario.highlights.map((item) => (
+              <li>✔ {item}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </Section>
+</Layout>

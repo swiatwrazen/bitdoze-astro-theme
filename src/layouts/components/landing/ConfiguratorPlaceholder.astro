@@ -1,0 +1,66 @@
+---
+const fields = [
+  {
+    id: "age",
+    label: "Wiek dziecka",
+    options: ["3-4 lata", "5-7 lat", "8-10 lat", "11+ lat"],
+  },
+  {
+    id: "children-count",
+    label: "Liczba dzieci",
+    options: ["Do 10", "10-15", "16-20", "21+"],
+  },
+  {
+    id: "event-type",
+    label: "Typ imprezy",
+    options: ["Urodziny", "Impreza szkolna", "Event rodzinny", "Event firmowy"],
+  },
+];
+---
+
+<section id="konfigurator" class="rounded-lg border border-sw-border bg-sw-card p-6 shadow-card">
+  <div class="mb-6">
+    <p class="text-sm font-medium uppercase tracking-wide text-sw-primary">Konfigurator</p>
+    <h3 class="mt-2 text-2xl font-bold text-sw-text">Szkic oferty w 60 sekund</h3>
+    <p class="mt-1 text-sm text-sw-muted">
+      Wprowadź podstawowe dane, a my przygotujemy rekomendację zestawu atrakcji.
+    </p>
+  </div>
+  <form class="space-y-4" aria-label="Konfigurator przyjęcia">
+    {
+      fields.map((field) => (
+        <label class="block text-sm text-sw-muted" for={field.id}>
+          {field.label}
+          <select
+            id={field.id}
+            class="w-full rounded-lg border border-sw-border bg-white px-3 py-3 text-sm text-sw-text focus:border-sw-primary focus:outline-none focus:ring-1 focus:ring-sw-primary"
+          >
+            {
+              field.options.map((option) => (
+                <option>{option}</option>
+              ))
+            }
+          </select>
+        </label>
+      ))
+    }
+    <label class="block text-sm text-sw-muted" for="location">
+      Lokalizacja
+      <input
+        id="location"
+        type="text"
+        placeholder="np. Mokotów / Praga"
+        class="w-full rounded-lg border border-sw-border px-3 py-3 text-sm text-sw-text placeholder:text-sw-muted focus:border-sw-primary focus:outline-none focus:ring-1 focus:ring-sw-primary"
+      />
+    </label>
+    <button
+      type="button"
+      class="w-full inline-flex items-center justify-center rounded-lg bg-sw-primary px-4 py-3.5 text-sm font-medium text-white transition-colors hover:bg-sw-primaryDark"
+    >
+      Oblicz cenę
+    </button>
+    <p class="text-center text-xs text-sw-muted">
+      Interaktywny kalkulator już wkrótce. To miejsce jest gotowe na komponent React.
+    </p>
+  </form>
+</section>

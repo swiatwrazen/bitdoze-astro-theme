@@ -17,10 +17,10 @@ const sortedPosts = posts.sort((a, b) => {
 });
 
 // Get pagination data for first page
-const { postsPerPage } = getPagination({ 
+const { postsPerPage, totalPages: blogTotalPages, nextUrl: firstPageNextUrl } = getPagination({ 
   page: 1, 
   totalPosts: sortedPosts.length, 
-  basePath: '/blog' 
+  basePath: '/blog/' 
 });
 
 // Get posts for the first page
@@ -47,10 +47,10 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
     
     <Pagination
       currentPage={1}
-      totalPages={Math.ceil(sortedPosts.length / postsPerPage)}
+      totalPages={blogTotalPages}
       prevUrl={null}
-      nextUrl={sortedPosts.length > postsPerPage ? `/blog/page/2/` : null}
-      basePath="/blog"
+      nextUrl={firstPageNextUrl}
+      basePath="/blog/"
     />
   </main>
 </Layout>

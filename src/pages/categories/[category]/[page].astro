@@ -26,30 +26,46 @@ export async function getStaticPaths({ paginate }) {
     // Generate pages for this category
     const totalPages = Math.ceil(categoryPosts.length / siteConfig.postsPerPage);
     
+    const categorySlug = category.toLowerCase();
     return Array.from({ length: totalPages }).map((_, i) => {
-      const page = i + 1;
-      // Skip page 1 as it's handled by the index.astro
-      if (page === 1) return null;
+      const pageNumber = i + 1;
+      if (pageNumber === 1) {
+        return {
+          params: { 
+            category: categorySlug,
+            page: 'page-1'
+          },
+          props: {
+            category,
+            redirectTo: `/categories/${categorySlug}/`
+          }
+        };
+      }
       
       return {
         params: { 
-          category: category.toLowerCase(),
-          page: page.toString()
+          category: categorySlug,
+          page: `page-${pageNumber}`
         },
         props: { 
           category,
           posts: categoryPosts,
-          page,
+          pageNumber,
           count: categoryPosts.length
         }
       };
-    }).filter(Boolean); // Remove null entries
+    });
   });
 }
 
-const { category, posts, page, count } = Astro.props;
-const currentPage = parseInt(page);
-const basePath = `/categories/${category.toLowerCase()}`;
+const { category, posts, pageNumber, count, redirectTo } = Astro.props;
+if (redirectTo) {
+  return Astro.redirect(redirectTo, 301);
+}
+const currentPage = typeof pageNumber === 'number' ? pageNumber : 1;
+const basePath = `/categories/${category.toLowerCase()}/`;
+const isFirstPage = currentPage <= 1;
+const pageSuffix = isFirstPage ? '' : ` – strona ${currentPage}`;
 
 // Get pagination data
 const { startIndex, endIndex, prevUrl, nextUrl, totalPages } = getPagination({ 
@@ -61,26 +77,27 @@ const { startIndex, endIndex, prevUrl, nextUrl, totalPages } = getPagination({
 // Get posts for the current page
 const paginatedPosts = posts.slice(startIndex, endIndex);
 
-// Set noindex based on site config
-const noindex = siteConfig.noindex.categories;
+const noindex = false;
 
 // Format the category name for display
 const formattedCategory = category.charAt(0).toUpperCase() + category.slice(1);
+const pageHeading = isFirstPage ? formattedCategory : `${formattedCategory}${pageSuffix}`;
+const baseTitle = `${formattedCategory} - ${siteConfig.name}`;
+const baseDescription = `Browse posts in the ${formattedCategory} category`;
+const pageTitle = `${baseTitle}${pageSuffix}`;
+const pageDescription = `${baseDescription}${pageSuffix}`;
 ---
 
 <Layout 
-  title={`${formattedCategory} - Page ${currentPage} - ${siteConfig.name}`}
-  description={`Browse posts in the ${formattedCategory} category - Page ${currentPage}`}
+  title={pageTitle}
+  description={pageDescription}
   noindex={noindex}
 >
   <div class="w-full py-8">
     <header class="mb-10">
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-        Category: {formattedCategory}
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+        Kategorie: {pageHeading}
       </h1>
-      <p class="text-lg text-gray-700 dark:text-gray-300">
-        Page {currentPage} of {totalPages} - {count} {count === 1 ? 'post' : 'posts'} in this category
-      </p>
     </header>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

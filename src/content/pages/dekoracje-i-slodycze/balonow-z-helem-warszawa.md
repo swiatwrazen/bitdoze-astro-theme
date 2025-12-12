@@ -1,6 +1,6 @@
 ---
 title: "Balony z helem i dekoracje"
-slug: "/dekoracje-i-slodycze/balonow-z-helem-warszawa"
+slug: "/dekoracje-i-słodycze/balonow-z-helem-warszawa"
 description: "Balony z helem, girlandy i dekoracje sal w Warszawie. Ponad 50 kombinacji kolorów i kształtów, dostawa pod wskazany adres."
 ---
 

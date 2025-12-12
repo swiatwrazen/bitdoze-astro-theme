@@ -7,14 +7,14 @@ interface BadgeProps {
 }
 
 const colors = {
-	primary: "bg-brand-blue/10 text-brand-navy ring-1 ring-brand-blue/20",
-	secondary: "bg-brand-yellow/20 text-brand-navy ring-1 ring-brand-yellow/40",
-	green: "bg-brand-blue/10 text-brand-navy ring-1 ring-brand-blue/20",
-	red: "bg-brand-yellow/20 text-brand-navy ring-1 ring-brand-yellow/40",
+	primary: "bg-sw-primary/10 text-sw-text ring-1 ring-sw-primary/20",
+	secondary: "bg-sw-bg text-sw-text ring-1 ring-sw-border",
+	green: "bg-sw-primary/10 text-sw-text ring-1 ring-sw-primary/20",
+	red: "bg-sw-primary/10 text-sw-text ring-1 ring-sw-primary/20",
 	white: "bg-white",
 };
 ---
 
-<span class={`inline-flex not-prose items-center mb-4 rounded-full px-3 py-1 text-base font-semibold ${colors[color]}`}
+<span class={`inline-flex not-prose items-center mb-4 rounded-lg px-3 py-1 text-base font-medium ${colors[color]}`}
 	>{title}</span
 >

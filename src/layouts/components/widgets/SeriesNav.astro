@@ -50,7 +50,7 @@ const nextPost = currentIndex < seriesPosts.length - 1 ? seriesPosts[currentInde
     {seriesPosts.map((post, index) => (
       <div class="flex items-center">
         <div class="flex-shrink-0 mr-3">
-          <div class={`w-7 h-7 rounded-full flex items-center justify-center ${post.slug === currentSlug ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}>
+          <div class={`w-7 h-7 rounded-lg flex items-center justify-center ${post.slug === currentSlug ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}>
             {index + 1}
           </div>
         </div>

@@ -16,7 +16,7 @@ const slug = post.data.canonical
 const isPartOfSeries = series && Array.isArray(series) && series.length === 2;
 ---
 
-<article class="flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-brand-blue/10 transition duration-300 hover:-translate-y-1" >
+<article class="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-card ring-1 ring-sw-border/50 transition duration-300 hover:-translate-y-1" >
   <!-- Post Image -->
   {image && (
     <a href={`/${slug}/`} class="block aspect-video overflow-hidden">
@@ -38,7 +38,7 @@ const isPartOfSeries = series && Array.isArray(series) && series.length === 2;
           {categories.map((category: string) => (
             <a 
               href={`/categories/${category.toLowerCase()}/`} 
-              class="rounded-full bg-brand-blue/10 px-3 py-1 text-xs font-semibold text-brand-blue transition hover:bg-brand-blue/20"
+              class="rounded-lg bg-sw-primary/10 px-3 py-1 text-xs font-medium text-sw-primary transition hover:bg-sw-primary/20"
             >
               {category}
             </a>
@@ -57,8 +57,8 @@ const isPartOfSeries = series && Array.isArray(series) && series.length === 2;
     </div>
     
     <!-- Title -->
-    <h2 class="text-2xl font-semibold text-brand-blue">
-      <a href={`/${slug}/`} class="line-clamp-2 transition hover:text-brand-blue/80">
+    <h2 class="text-2xl font-medium text-sw-primary">
+      <a href={`/${slug}/`} class="line-clamp-2 transition hover:text-sw-primary/80">
         {title}
       </a>
     </h2>
@@ -74,7 +74,7 @@ const isPartOfSeries = series && Array.isArray(series) && series.length === 2;
       <!-- Author -->
       {authors && authors.length > 0 && (
         <div class="flex items-center">
-          <Icon name="mdi:account" class="mr-2 h-4 w-4 text-brand-blue" />
+          <Icon name="mdi:account" class="mr-2 h-4 w-4 text-sw-primary" />
           <span>{authors[0]}</span>
         </div>
       )}
@@ -82,7 +82,7 @@ const isPartOfSeries = series && Array.isArray(series) && series.length === 2;
       <!-- Date -->
       {date && (
         <div class="flex items-center">
-          <Icon name="mdi:calendar" class="mr-2 h-4 w-4 text-brand-blue" />
+          <Icon name="mdi:calendar" class="mr-2 h-4 w-4 text-sw-primary" />
           <time datetime={date.toISOString()}>
             {formatDate(date)}
           </time>

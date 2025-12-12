@@ -26,30 +26,46 @@ export async function getStaticPaths({ paginate }) {
     // Generate pages for this tag
     const totalPages = Math.ceil(tagPosts.length / siteConfig.postsPerPage);
     
+    const tagSlug = tag.toLowerCase();
     return Array.from({ length: totalPages }).map((_, i) => {
-      const page = i + 1;
-      // Skip page 1 as it's handled by the index.astro
-      if (page === 1) return null;
+      const pageNumber = i + 1;
+      if (pageNumber === 1) {
+        return {
+          params: { 
+            tag: tagSlug,
+            page: 'page-1'
+          },
+          props: {
+            tag,
+            redirectTo: `/tags/${tagSlug}/`
+          }
+        };
+      }
       
       return {
         params: { 
-          tag: tag.toLowerCase(),
-          page: page.toString()
+          tag: tagSlug,
+          page: `page-${pageNumber}`
         },
         props: { 
           tag,
           posts: tagPosts,
-          page,
+          pageNumber,
           count: tagPosts.length
         }
       };
-    }).filter(Boolean); // Remove null entries
+    });
   });
 }
 
-const { tag, posts, page, count } = Astro.props;
-const currentPage = parseInt(page);
-const basePath = `/tags/${tag.toLowerCase()}`;
+const { tag, posts, pageNumber, count, redirectTo } = Astro.props;
+if (redirectTo) {
+  return Astro.redirect(redirectTo, 301);
+}
+const currentPage = typeof pageNumber === 'number' ? pageNumber : 1;
+const basePath = `/tags/${tag.toLowerCase()}/`;
+const isFirstPage = currentPage <= 1;
+const pageSuffix = isFirstPage ? '' : ` – strona ${currentPage}`;
 
 // Get pagination data
 const { startIndex, endIndex, prevUrl, nextUrl, totalPages } = getPagination({ 
@@ -61,26 +77,27 @@ const { startIndex, endIndex, prevUrl, nextUrl, totalPages } = getPagination({
 // Get posts for the current page
 const paginatedPosts = posts.slice(startIndex, endIndex);
 
-// Set noindex based on site config
-const noindex = siteConfig.noindex.tags;
+const noindex = false;
 
 // Format the tag name for display
 const formattedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
+const pageHeading = isFirstPage ? `#${formattedTag}` : `#${formattedTag}${pageSuffix}`;
+const baseTitle = `Posty z tagiem ${formattedTag} - ${siteConfig.name}`;
+const baseDescription = `Browse posts tagged with ${formattedTag}`;
+const pageTitle = `${baseTitle}${pageSuffix}`;
+const pageDescription = `${baseDescription}${pageSuffix}`;
 ---
 
 <Layout 
-  title={`Posts tagged with ${formattedTag} - Page ${currentPage} - ${siteConfig.name}`}
-  description={`Browse posts tagged with ${formattedTag} - Page ${currentPage}`}
+  title={pageTitle}
+  description={pageDescription}
   noindex={noindex}
 >
   <div class="w-full py-8">
     <header class="mb-10">
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-        Tag: #{formattedTag}
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+        {pageHeading}
       </h1>
-      <p class="text-lg text-gray-700 dark:text-gray-300">
-        Page {currentPage} of {totalPages} - {count} {count === 1 ? 'post' : 'posts'} with this tag
-      </p>
     </header>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

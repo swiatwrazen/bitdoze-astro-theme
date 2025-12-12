@@ -30,7 +30,7 @@ const brandParts = company.name.split(" ").filter(Boolean);
 const brandPrimary = brandParts[0] ?? "Brand";
 const brandSecondary = brandParts.slice(1).join(" ");
 
-const navLinkBase = "inline-flex items-center gap-1 rounded-full px-3 py-2 text-base font-semibold text-brand-navy transition hover:text-brand-blue";
+const navLinkBase = "inline-flex items-center gap-1 rounded-lg px-3 py-3 text-base font-medium text-sw-text transition hover:text-sw-primary";
 
 const linkClasses = (item) => {
   const classes = [navLinkBase];
@@ -40,36 +40,38 @@ const linkClasses = (item) => {
 };
 
 const childLinkClasses = (child) => {
-  const classes = ["block rounded-lg px-3 py-2 text-sm font-medium text-brand-navy/80 transition hover:bg-brand-blue/5 hover:text-brand-blue"];
+  const classes = ["block rounded-lg px-3 py-3 text-sm font-medium text-sw-muted transition hover:bg-sw-primary/5 hover:text-sw-primary"];
   if (child.normalizedUrl && child.normalizedUrl === currentPath) {
-    classes.push("text-brand-blue", "font-semibold");
+    classes.push("text-sw-primary", "font-medium");
   }
   return classes.join(" ");
 };
 ---
 
-<header class="sticky top-0 z-40 border-b border-gray-200 bg-white/90 backdrop-blur">
-  <div class="container py-4">
+<header class="sticky top-0 z-40 border-b border-sw-border bg-white/90 backdrop-blur">
+  <div class="mx-auto w-full max-w-6xl px-0 py-4 sm:px-4">
     <nav class="flex items-center justify-between gap-4" aria-label="Global navigation">
       <a href="/" class="-m-1.5 p-1.5" aria-label={company.name}>
-        <p class="text-3xl font-black text-brand-blue">
+        <p class="text-3xl font-black text-sw-primary">
           {brandPrimary}
           {brandSecondary && (
-            <span class="ml-2 inline-flex rounded-lg bg-brand-yellow/20 px-3 text-brand-navy">{brandSecondary}</span>
+            <span class="ml-2 inline-flex rounded-lg border border-sw-border px-3 text-sw-text">{brandSecondary}</span>
           )}
         </p>
       </a>
       <div class="flex items-center gap-3 lg:hidden">
         <button
           type="button"
-          class="inline-flex items-center justify-center rounded-md p-2.5 text-brand-blue transition hover:bg-brand-blue/10"
+          class="inline-flex items-center justify-center rounded-lg border border-sw-border/70 p-2.5 text-sw-primary transition hover:bg-sw-primary/10"
           aria-expanded="false"
           aria-controls="mobile-nav"
           data-mobile-nav-toggle
         >
           <span class="sr-only">Open main menu</span>
-          <svg class="size-8" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+          <svg class="size-8" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
+            <path
+              d="M128 102.4c0-14.138 11.462-25.6 25.6-25.6h332.8c14.138 0 25.6 11.462 25.6 25.6s-11.462 25.6-25.6 25.6H153.6c-14.138 0-25.6-11.463-25.6-25.6Zm358.4 128H25.6C11.462 230.4 0 241.863 0 256c0 14.138 11.462 25.6 25.6 25.6h460.8c14.138 0 25.6-11.462 25.6-25.6 0-14.137-11.462-25.6-25.6-25.6Zm0 153.6H256c-14.137 0-25.6 11.462-25.6 25.6 0 14.137 11.463 25.6 25.6 25.6h230.4c14.138 0 25.6-11.463 25.6-25.6 0-14.138-11.462-25.6-25.6-25.6Z"
+            />
           </svg>
         </button>
       </div>
@@ -85,11 +87,11 @@ const childLinkClasses = (child) => {
                   aria-expanded="false"
                 >
                   {item.name}
-                  <svg class="size-4 text-brand-blue transition group-hover:rotate-180" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <svg class="size-4 text-sw-primary transition group-hover:rotate-180" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.25a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
                   </svg>
                 </button>
-                <div class="invisible absolute left-0 top-full z-30 mt-3 w-56 -translate-y-2 rounded-2xl border border-gray-200 bg-white p-4 opacity-0 shadow-lg transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                <div class="invisible absolute left-0 top-full z-30 mt-3 w-56 -translate-y-2 rounded-lg border border-sw-border bg-white p-4 opacity-0 shadow-card transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                   {
                     item.children.map((child) => (
                       <a href={child.url} class={childLinkClasses(child)}>
@@ -106,7 +108,7 @@ const childLinkClasses = (child) => {
             )
           ))
         }
-        <a href="/search/" class="inline-flex items-center gap-2 rounded-full px-3 py-2 text-base font-semibold text-brand-navy transition hover:bg-brand-blue/10 hover:text-brand-blue">
+        <a href="/search/" class="inline-flex items-center gap-2 rounded-lg px-3 py-3 text-base font-medium text-sw-text transition hover:bg-sw-primary/10 hover:text-sw-primary">
           Search
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 5 5a7.5 7.5 0 0 0 11.65 11.65Z"></path>
@@ -119,14 +121,14 @@ const childLinkClasses = (child) => {
   <div class="fixed inset-x-0 top-0 z-50 hidden min-h-screen overflow-y-auto bg-white px-8 py-6" id="mobile-nav" data-mobile-nav-panel>
     <div class="flex items-center justify-between">
       <a href="/" class="-m-1.5 p-1.5" aria-label={company.name}>
-        <p class="text-3xl font-black text-brand-blue">
+        <p class="text-3xl font-black text-sw-primary">
           {brandPrimary}
           {brandSecondary && (
-            <span class="ml-2 inline-flex rounded-lg bg-brand-yellow/20 px-3 text-brand-navy">{brandSecondary}</span>
+            <span class="ml-2 inline-flex rounded-lg border border-sw-border px-3 text-sw-text">{brandSecondary}</span>
           )}
         </p>
       </a>
-      <button type="button" class="inline-flex items-center justify-center rounded-md p-2.5 text-brand-yellow transition hover:bg-brand-yellow/10" data-mobile-nav-close aria-label="Close menu">
+      <button type="button" class="inline-flex items-center justify-center rounded-lg border border-sw-border p-2.5 text-sw-primary transition hover:bg-sw-primary/10" data-mobile-nav-close aria-label="Close menu">
         <svg class="size-8" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
         </svg>
@@ -139,7 +141,7 @@ const childLinkClasses = (child) => {
             <div class="border-b border-gray-200 pb-4">
               <button
                 type="button"
-                class="flex w-full items-center justify-between rounded-full px-4 py-3 text-left text-xl font-semibold text-brand-navy transition hover:bg-brand-blue/10 hover:text-brand-blue"
+                class="flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-xl font-medium text-sw-text transition hover:bg-sw-primary/10 hover:text-sw-primary"
                 data-mobile-nav-parent
                 data-target={item.id}
                 aria-expanded="false"
@@ -152,7 +154,7 @@ const childLinkClasses = (child) => {
               <div id={item.id} class="mt-4 hidden space-y-2">
                 {
                   item.children.map((child) => (
-                    <a href={child.url} class="block rounded-xl px-4 py-3 text-lg font-medium text-brand-navy/80 transition hover:bg-brand-blue/10 hover:text-brand-blue">
+                    <a href={child.url} class="block rounded-xl px-4 py-3 text-lg font-medium text-sw-muted transition hover:bg-sw-primary/10 hover:text-sw-primary">
                       {child.name}
                     </a>
                   ))
@@ -162,14 +164,14 @@ const childLinkClasses = (child) => {
           ) : (
             <a
               href={item.url}
-              class="block rounded-full px-4 py-3 text-center text-2xl font-semibold text-brand-navy transition hover:bg-brand-blue/10 hover:text-brand-blue"
+              class="block rounded-lg px-4 py-3 text-center text-2xl font-medium text-sw-text transition hover:bg-sw-primary/10 hover:text-sw-primary"
             >
               {item.name}
             </a>
           )
         ))
       }
-      <a href="/search/" class="block rounded-full px-4 py-3 text-center text-2xl font-semibold text-brand-navy transition hover:bg-brand-blue/10 hover:text-brand-blue">
+      <a href="/search/" class="block rounded-lg px-4 py-3 text-center text-2xl font-medium text-sw-text transition hover:bg-sw-primary/10 hover:text-sw-primary">
         Search
       </a>
     </div>

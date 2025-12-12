@@ -18,15 +18,27 @@ export function getPagination({ page, totalPosts, postsPerPage = siteConfig.post
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = Math.min(startIndex + postsPerPage, totalPosts);
   
-  // Generate URLs for previous and next pages
-  const prevUrl = currentPage > 1 
-    ? currentPage === 2 
-      ? basePath 
-      : `${basePath}${basePath.endsWith('/') ? '' : '/'}page/${currentPage - 1}/` 
+  const stripTrailingSlash = (path: string) => {
+    if (path === '/' || path === '') return '';
+    return path.endsWith('/') ? path.slice(0, -1) : path;
+  };
+
+  const buildPageUrl = (pageNumber: number) => {
+    const normalizedBase = stripTrailingSlash(basePath);
+    if (!normalizedBase) {
+      return `/page-${pageNumber}/`;
+    }
+    return `${normalizedBase}/page-${pageNumber}/`;
+  };
+
+  const prevUrl = currentPage > 1
+    ? currentPage === 2
+      ? basePath
+      : buildPageUrl(currentPage - 1)
     : null;
-    
-  const nextUrl = currentPage < totalPages 
-    ? `${basePath}${basePath.endsWith('/') ? '' : '/'}page/${currentPage + 1}/` 
+
+  const nextUrl = currentPage < totalPages
+    ? buildPageUrl(currentPage + 1)
     : null;
   
   return {

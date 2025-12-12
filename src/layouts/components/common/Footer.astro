@@ -7,10 +7,21 @@ import { siteConfig } from "@config/site";
 import { company, phone, email, address } from "@config/company";
 
 const footerMenu = menu.footer ?? [];
+const extraLinks = [
+  { name: "Cennik", url: "/cennik/" },
+  { name: "FAQ", url: "/faq/" },
+  { name: "Dla firm", url: "/dla-firm/" },
+  { name: "Dołącz jako animator", url: "/dolacz-jako-animator/" },
+];
 const socialLinks = Object.entries(social)
   .filter(([, url]) => Boolean(url))
   .map(([platform, url]) => ({ platform, url }))
   .slice(0, 6);
+
+const getIconName = (platform: string) => {
+  if (platform === "website") return "mdi:web";
+  return `mdi:${platform}`;
+};
 
 const allPosts = await getCollection("posts", ({ data }) => !data.draft);
 const recentPosts = allPosts
@@ -18,43 +29,47 @@ const recentPosts = allPosts
   .slice(0, 3);
 
 const currentYear = new Date().getFullYear();
-const brandParts = company.name.split(" ").filter(Boolean);
-const brandPrimary = brandParts[0] ?? siteConfig.name;
-const brandSecondary = brandParts.slice(1).join(" ");
 ---
 
-<footer class="mt-16 bg-brand-blue text-white">
-  <div class="container py-16">
+<footer class="bg-white text-sw-text">
+  <div class="mx-auto w-full max-w-6xl px-4 py-section">
     <div class="grid gap-12 lg:grid-cols-4">
-      <div class="space-y-6">
-        <p class="text-3xl font-black text-white">
-          {brandPrimary}
-          {brandSecondary && (
-            <span class="ml-2 inline-flex rounded-lg bg-white px-3 text-brand-navy">{brandSecondary}</span>
-          )}
-        </p>
-        <p class="max-w-xs text-base/relaxed text-white/80">{company.slogan}</p>
+      <div class="space-y-2">
+        <a href="/" class="inline-flex items-center" aria-label={company.name}>
+          <picture>
+            <source srcset="/logo.svg" media="(min-width: 1024px)" />
+            <img src="/favicon.svg" alt={company.name} class="h-12 w-auto" />
+          </picture>
+        </a>
+        <p class="max-w-xs text-base/relaxed text-sw-muted">{company.slogan}</p>
         <div class="flex flex-wrap items-center gap-3">
           {socialLinks.map(({ platform, url }) => (
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex size-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white hover:text-brand-blue"
+              class="inline-flex size-10 items-center justify-center rounded-lg border border-sw-border text-sw-text transition hover:border-sw-primary hover:text-sw-primary"
               aria-label={`Follow on ${platform}`}
             >
-              <Icon name={`mdi:${platform}`} class="size-5" />
+              <Icon name={getIconName(platform)} class="size-5" />
             </a>
           ))}
         </div>
       </div>
 
       <div class="space-y-4">
-        <h2 class="text-lg font-semibold uppercase tracking-wide text-white">Menu</h2>
-        <ul class="space-y-2 text-white/80">
+        <h2 class="text-lg font-medium uppercase tracking-wide">Menu</h2>
+        <ul class="space-y-2 text-sw-muted">
           {footerMenu.map((item) => (
             <li>
-              <a href={item.url} class="transition hover:text-white">
+              <a href={item.url} class="transition hover:text-sw-primary">
+                {item.name}
+              </a>
+            </li>
+          ))}
+          {extraLinks.map((item) => (
+            <li>
+              <a href={item.url} class="transition hover:text-sw-primary">
                 {item.name}
               </a>
             </li>
@@ -63,12 +78,12 @@ const brandSecondary = brandParts.slice(1).join(" ");
       </div>
 
       <div class="space-y-4">
-        <h2 class="text-lg font-semibold uppercase tracking-wide text-white">Kontakt</h2>
-        <div class="space-y-2 text-white/80">
-          <a href={phone.href} class="block transition hover:text-white">
+        <h2 class="text-lg font-medium uppercase tracking-wide">Kontakt</h2>
+        <div class="space-y-2 text-sw-muted">
+          <a href={phone.href} class="block transition hover:text-sw-primary">
             {phone.label}
           </a>
-          <a href={email.href} class="block transition hover:text-white">
+          <a href={email.href} class="block transition hover:text-sw-primary">
             {email.label}
           </a>
           <p>
@@ -82,18 +97,18 @@ const brandSecondary = brandParts.slice(1).join(" ");
       </div>
 
       <div class="space-y-4">
-        <h2 class="text-lg font-semibold uppercase tracking-wide text-white">Najnowsze wpisy</h2>
+        <h2 class="text-lg font-medium uppercase tracking-wide">Najnowsze wpisy</h2>
         <ul class="space-y-3">
           {
             recentPosts.map((post) => (
               <li>
                 <a
                   href={`/${post.slug}/`}
-                  class="block rounded-xl border border-white/10 p-3 transition hover:border-white hover:bg-white/10"
+                  class="block rounded-lg border border-sw-border p-3 transition hover:border-sw-primary/40 hover:bg-sw-bg"
                 >
-                  <p class="text-sm font-semibold text-white line-clamp-2">{post.data.title}</p>
+                  <p class="text-sm font-medium text-sw-text line-clamp-2">{post.data.title}</p>
                   {post.data.date && (
-                    <span class="mt-1 block text-xs text-white/70">
+                    <span class="mt-1 block text-xs text-sw-muted">
                       {new Date(post.data.date).toLocaleDateString("pl-PL")}
                     </span>
                   )}
@@ -105,9 +120,13 @@ const brandSecondary = brandParts.slice(1).join(" ");
       </div>
     </div>
   </div>
-  <div class="border-t border-white/20 bg-brand-blue/90">
-    <div class="container py-6 text-center text-sm text-white/80">
-      &copy; {currentYear} {siteConfig.name}. Wszystkie prawa zastrzezone.
+  <div class="border-t border-sw-border bg-white">
+    <div class="mx-auto w-full max-w-6xl space-y-2 px-4 py-6 text-center text-sm text-sw-muted">
+      <p>
+        Dane uczestnikow chronimy zgodnie z RODO. Zgoda na publikacje zdjec i regulamin dostepne w{" "}
+        <a href="/polityka-prywatnosci/" class="font-medium text-sw-primary hover:text-sw-primaryDark">Polityce prywatnosci</a>.
+      </p>
+      <p>&copy; {currentYear} {siteConfig.name}. Wszystkie prawa zastrzezone.</p>
     </div>
   </div>
 </footer>

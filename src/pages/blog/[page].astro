@@ -19,26 +19,43 @@ export async function getStaticPaths() {
   // Calculate total pages
   const totalPages = Math.ceil(sortedPosts.length / siteConfig.postsPerPage);
   
-  // Generate paths for each page
-  return Array.from({ length: totalPages }).map((_, i) => {
-    const page = i + 1;
-    // Skip page 1 as it's handled by the index.astro
-    if (page === 1) return null;
+  const paths = Array.from({ length: totalPages }).map((_, i) => {
+    const pageNumber = i + 1;
+    if (pageNumber === 1) {
+      return {
+        params: { page: 'page-1' },
+        props: {
+          redirectTo: '/blog/'
+        }
+      };
+    }
     
     return {
-      params: { page: page.toString() },
+      params: { page: `page-${pageNumber}` },
       props: { 
         posts: sortedPosts,
-        page,
+        pageNumber,
         totalPosts: sortedPosts.length
       }
     };
-  }).filter(Boolean); // Remove null entries
+  });
+
+  return paths;
 }
 
-const { posts, page, totalPosts } = Astro.props;
-const currentPage = parseInt(page);
-const basePath = '/blog';
+const { posts, pageNumber, totalPosts, redirectTo } = Astro.props;
+if (redirectTo) {
+  return Astro.redirect(redirectTo, 301);
+}
+const currentPage = typeof pageNumber === 'number' ? pageNumber : 1;
+const basePath = '/blog/';
+const isFirstPage = currentPage <= 1;
+const pageSuffix = isFirstPage ? '' : ` – strona ${currentPage}`;
+const pageHeading = isFirstPage ? 'Blog' : `Blog${pageSuffix}`;
+const baseTitle = `Blog - ${siteConfig.name}`;
+const baseDescription = 'Explore our articles, tutorials, and insights';
+const pageTitle = `${baseTitle}${pageSuffix}`;
+const pageDescription = `${baseDescription}${pageSuffix}`;
 
 // Get pagination data
 const { startIndex, endIndex, prevUrl, nextUrl, totalPages } = getPagination({ 
@@ -52,16 +69,12 @@ const paginatedPosts = posts.slice(startIndex, endIndex);
 ---
 
 <Layout 
-  title={`Blog - Page ${currentPage} - ${siteConfig.name}`}
-  description={`Explore our articles, tutorials, and insights - Page ${currentPage}`}
-  noindex={true}
+  title={pageTitle}
+  description={pageDescription}
 >
   <main class="w-full py-8">
     <header class="mb-10">
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Blog</h1>
-      <p class="text-lg text-gray-700 dark:text-gray-300">
-        Page {currentPage} of {totalPages} - Explore our articles, tutorials, and insights
-      </p>
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">{pageHeading}</h1>
     </header>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

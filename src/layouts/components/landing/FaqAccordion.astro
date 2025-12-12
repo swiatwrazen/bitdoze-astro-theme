@@ -1,0 +1,47 @@
+---
+import type { FaqItem } from "@data/faq";
+
+interface Props {
+  items: FaqItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="space-y-4" data-faq-accordion>
+  {items.map((item, index) => (
+    <details class="overflow-hidden rounded-lg border border-sw-border bg-sw-card shadow-card" open={index === 0}>
+      <summary class="flex cursor-pointer items-center justify-between px-5 py-4 text-left text-lg font-medium text-sw-text">
+        <span>{item.question}</span>
+        <svg class="size-5 text-sw-primary transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 12h12M12 6v12" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </summary>
+      <div class="border-t border-sw-border px-5 py-4 text-sw-muted">
+        <p>{item.answer}</p>
+      </div>
+    </details>
+  ))}
+</div>
+
+<script>
+  const initAccordion = () => {
+    document.querySelectorAll("[data-faq-accordion] details").forEach((details) => {
+      details.addEventListener("toggle", () => {
+        if (details.open) {
+          details.parentElement?.querySelectorAll("details").forEach((other) => {
+            if (other !== details) other.removeAttribute("open");
+          });
+        }
+      });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAccordion, { once: true });
+  } else {
+    initAccordion();
+  }
+
+  document.addEventListener("astro:page-load", initAccordion);
+</script>

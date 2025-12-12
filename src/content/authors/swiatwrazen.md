@@ -1,3 +1,4 @@
+---
 title: SwiatWrazen
 image: "/images/authors/swiatwrazen.webp"
 description: SwiatWrazen — автор і куратор проєкту
@@ -7,5 +8,5 @@ social:
   instagram: https://www.instagram.com/swiatwrazen
 ---
 
-Привіт! Я — SwiatWrazen, автор і куратор цього сайту. Пишу про технології, ділюся досвідом і збираю корисні матеріали, щоб вам було простіше розібратися у світі IT.
-
+Świat Wrażeń to zespół profesjonalnych animatorów z Warszawy. 
+Organizujemy urodziny, wydarzenia szkolne i rodzinne, dbając o bezpieczeństwo i świetną zabawę dzieci.

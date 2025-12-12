@@ -1,0 +1,57 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/astropie/Section.astro";
+import Badge from "@components/astropie/Badge.astro";
+import Button from "@components/astropie/Button.astro";
+import { warsawDistricts, type DistrictLanding } from "@data/districts";
+
+export function getStaticPaths() {
+  return warsawDistricts.map((district) => ({
+    params: { district: district.slug },
+    props: { district },
+  }));
+}
+
+interface Props {
+  district: DistrictLanding;
+}
+
+const { district } = Astro.props as Props;
+const pageTitle = `Animator na urodziny dziecka – Warszawa ${district.name}`;
+const pageDescription = `Profesjonalni animatorzy dla dzieci z dojazdem do dzielnicy ${district.name}. Organizujemy przyjęcia urodzinowe, wydarzenia szkolne i rodzinne imprezy w Warszawie.`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <Section class:list={["bg-white"]}>
+    <Badge title={`Warszawa · ${district.name}`} color="primary" />
+    <h1 class="mt-4 text-4xl font-black text-sw-text">{pageTitle}</h1>
+    <p class="mt-4 text-lg text-sw-muted">{district.intro}</p>
+    <p class="mt-4 text-sw-muted">{district.description}</p>
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-2">
+      <article class="rounded-lg bg-sw-bg p-6 shadow-card ring-1 ring-sw-border/50">
+        <h2 class="text-2xl font-medium text-sw-text">Najczęściej wybierane usługi</h2>
+        <ul class="mt-4 space-y-2 text-sw-muted">
+          {district.services.map((service) => (
+            <li>✔ {service}</li>
+          ))}
+        </ul>
+      </article>
+
+      <article class="rounded-lg bg-white p-6 shadow-card ring-1 ring-sw-border/50">
+        <h2 class="text-2xl font-medium text-sw-text">Gdzie działamy?</h2>
+        <p class="mt-2 text-sw-muted">Dojedziemy pod wskazany adres w cenie pakietu.</p>
+        <ul class="mt-4 space-y-2 text-sw-muted">
+          {district.locations.map((location) => (
+            <li>✔ {location}</li>
+          ))}
+        </ul>
+      </article>
+    </div>
+
+    <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row">
+      <Button url="/#konfigurator" color="primary">Skonfiguruj przyjęcie</Button>
+      <Button url="/cennik" color="secondary">Zobacz cennik</Button>
+    </div>
+  </Section>
+</Layout>

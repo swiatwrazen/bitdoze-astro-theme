@@ -1,0 +1,107 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/astropie/Section.astro";
+import Badge from "@components/astropie/Badge.astro";
+import Button from "@components/astropie/Button.astro";
+import { email } from "@config/company";
+
+const benefits = ["Możliwość wystawienia faktury i rozliczeń cyklicznych", "Elastyczne terminy i duże zespoły animatorów", "Programy cykliczne dla przedszkoli i świetlic", "Wsparcie w organizacji Dnia Dziecka, Mikołajek i pikników firmowych"];
+
+const audience = ["Szkoły i przedszkola publiczne oraz prywatne", "Firmy planujące family day lub event świąteczny", "Centra kultury i domy sąsiedzkie", "Urzędy dzielnic oraz biblioteki"];
+---
+
+<Layout title="Animacje i wydarzenia dla firm, szkół i przedszkoli" description="Świat Wrażeń organizuje animacje, warsztaty i strefy zabaw dla instytucji w Warszawie. Obsługujemy pikniki, Mikołajki, dni otwarte i cykliczne zajęcia.">
+  <Section>
+    <div class="mx-auto flex max-w-5xl flex-col gap-10 lg:flex-row lg:items-center">
+      <div class="space-y-6">
+        <Badge title="Oferta dla instytucji" color="primary" />
+        <h1 class="text-4xl font-black text-sw-text">Animacje i wydarzenia dla firm, szkół i przedszkoli</h1>
+        <p class="text-lg text-sw-muted">
+          Tworzymy strefy rodzinne podczas eventów firmowych, prowadzimy warsztaty w przedszkolach i organizujemy sceniczne programy na miejskich piknikach.
+          Opracujemy scenariusz dopasowany do wieku dzieci i charakteru wydarzenia.
+        </p>
+        <ul class="space-y-2 text-sw-muted">
+          {audience.map((item) => (
+            <li>✔ {item}</li>
+          ))}
+        </ul>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href="#formularz-firmy"
+            class="inline-flex items-center justify-center rounded-lg bg-sw-primary px-5 py-3 text-lg font-medium text-white transition-colors hover:bg-sw-primaryDark"
+          >
+            Wyślij zapytanie
+          </a>
+          <Button url="/cennik" color="secondary">Sprawdź pakiety</Button>
+        </div>
+      </div>
+      <div class="rounded-lg border border-sw-border bg-sw-card p-6 shadow-card">
+        <h2 class="text-2xl font-medium text-sw-text">Co możemy zrealizować?</h2>
+        <ul class="mt-4 space-y-3 text-sw-muted">
+          <li>✔ Animacje podczas dni otwartych, rodzinnych i pikników.</li>
+          <li>✔ Warsztaty tematyczne (chemiczne, artystyczne, sensoryczne).</li>
+          <li>✔ Wizyty Mikołaja i Elfów, paczki świąteczne, dekoracje.</li>
+          <li>✔ Długofalowe projekty – cykl zajęć w placówce lub strefa w galerii handlowej.</li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section>
+    <div class="grid gap-8 lg:grid-cols-2">
+      <article class="rounded-lg border border-sw-border bg-sw-card p-6 shadow-card">
+        <h2 class="text-2xl font-medium text-sw-text">Dlaczego warto z nami współpracować?</h2>
+        <ul class="mt-4 space-y-3 text-sw-muted">
+          {benefits.map((benefit) => (
+            <li>✔ {benefit}</li>
+          ))}
+        </ul>
+      </article>
+      <article class="rounded-lg border border-sw-border bg-sw-card p-6 shadow-card">
+        <h2 class="text-2xl font-medium text-sw-text">Organizacja krok po kroku</h2>
+        <ol class="mt-4 space-y-3 text-sw-muted">
+          <li><strong>Konsultacja</strong> – poznajemy potrzeby wydarzenia i liczbę uczestników.</li>
+          <li><strong>Propozycja</strong> – wysyłamy scenariusz, kosztorys oraz listę atrakcji dodatkowych.</li>
+          <li><strong>Koordynacja</strong> – rezerwujemy animatorów, dekoracje i sprzęt.</li>
+          <li><strong>Realizacja</strong> – przyjeżdżamy wcześniej, ustawiamy strefy i prowadzimy animacje.</li>
+        </ol>
+      </article>
+    </div>
+  </Section>
+
+  <Section>
+    <div class="mx-auto max-w-3xl rounded-lg border border-sw-border bg-sw-card p-8 shadow-card" id="formularz-firmy">
+      <h2 class="text-3xl font-black text-sw-text">Wyślij zapytanie</h2>
+      <p class="mt-2 text-sw-muted">
+        Wypełnij formularz, a w ciągu jednego dnia roboczego odezwiemy się z propozycją programu. Możesz również napisać na <a href={email.href} class="font-medium text-sw-primary">{email.label}</a>.
+      </p>
+      <form class="mt-6 space-y-4" action={email.href} method="post" enctype="text/plain">
+        <label class="block text-sm text-sw-muted">
+          Nazwa firmy / instytucji
+          <input type="text" name="Firma" required class="w-full rounded-lg border border-sw-border px-3 py-3 text-sm text-sw-text focus:border-sw-primary focus:outline-none focus:ring-1 focus:ring-sw-primary" />
+        </label>
+        <label class="block text-sm text-sw-muted">
+          Imię i nazwisko
+          <input type="text" name="Imię i nazwisko" required class="w-full rounded-lg border border-sw-border px-3 py-3 text-sm text-sw-text focus:border-sw-primary focus:outline-none focus:ring-1 focus:ring-sw-primary" />
+        </label>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block text-sm text-sw-muted">
+            E-mail
+            <input type="email" name="Email" required class="w-full rounded-lg border border-sw-border px-3 py-3 text-sm text-sw-text focus:border-sw-primary focus:outline-none focus:ring-1 focus:ring-sw-primary" />
+          </label>
+          <label class="block text-sm text-sw-muted">
+            Telefon
+            <input type="tel" name="Telefon" required class="w-full rounded-lg border border-sw-border px-3 py-3 text-sm text-sw-text focus:border-sw-primary focus:outline-none focus:ring-1 focus:ring-sw-primary" />
+          </label>
+        </div>
+        <label class="block text-sm text-sw-muted">
+          Opis wydarzenia / termin
+          <textarea name="Opis" rows="4" required class="w-full rounded-lg border border-sw-border px-3 py-3 text-sm text-sw-text focus:border-sw-primary focus:outline-none focus:ring-1 focus:ring-sw-primary"></textarea>
+        </label>
+        <button type="submit" class="w-full inline-flex items-center justify-center rounded-lg bg-sw-primary px-4 py-3.5 text-sm font-medium text-white transition-colors hover:bg-sw-primaryDark">
+          Wyślij zapytanie
+        </button>
+      </form>
+    </div>
+  </Section>
+</Layout>

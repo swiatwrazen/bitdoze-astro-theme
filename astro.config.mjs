@@ -32,5 +32,32 @@ export default defineConfig({
   },
   
   // Configure Astro integrations
-  integrations: [mdx(), icon(), sitemap()]
+  integrations: [mdx(), icon(), sitemap({
+    filter: (url) => {
+      try {
+        const { pathname } = new URL(url);
+        const noindexPrefixes = [
+          '/search',
+          '/tags',
+          '/500',
+        ];
+        const noindexExact = new Set([
+          '/cennik-archiwalny/',
+        ]);
+
+        if (/\/page-\d+(\/|$)/.test(pathname)) {
+          return false;
+        }
+        if (noindexPrefixes.some((prefix) => pathname.startsWith(prefix))) {
+          return false;
+        }
+        if (noindexExact.has(pathname)) {
+          return false;
+        }
+        return true;
+      } catch {
+        return true;
+      }
+    }
+  })]
 });

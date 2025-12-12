@@ -1,7 +1,8 @@
 ---
-title: "Cennik usług"
-slug: "/cennik"
-description: "Przegląd cen animacji, pakietów urodzinowych i atrakcji dodatkowych Świata Wrażeń."
+title: "Cennik usług (archiwum)"
+slug: "/cennik-archiwalny"
+description: "Historyczne ceny i opisy usług Świata Wrażeń."
+noindex: true
 ---
 
 # Cennik

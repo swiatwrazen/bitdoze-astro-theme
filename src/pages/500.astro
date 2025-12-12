@@ -1,0 +1,31 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Layout title="Błąd serwera" description="Coś poszło nie tak. Spróbuj ponownie lub wróć na stronę główną." noindex={true}>
+  <section class="py-section">
+    <div class="mx-auto flex w-full max-w-3xl flex-col items-center gap-6 px-4 text-center">
+      <Icon name="mdi:server-network-off" class="h-24 w-24 text-sw-primary" />
+      <h1 class="text-4xl font-bold text-sw-text">Ups! Wystąpił błąd serwera</h1>
+      <p class="text-lg text-sw-muted">
+        Pracujemy nad rozwiązaniem problemu. Odśwież stronę lub wróć do głównych sekcji serwisu.
+      </p>
+      <div class="flex flex-col gap-4 sm:flex-row">
+        <button
+          type="button"
+          class="inline-flex items-center justify-center rounded-lg bg-sw-primary px-5 py-3 text-white transition hover:bg-sw-primaryDark"
+          onClick="window.location.reload()"
+        >
+          Odśwież stronę
+        </button>
+        <a
+          href="/"
+          class="inline-flex items-center justify-center rounded-lg border border-sw-primary px-5 py-3 text-sw-primary transition hover:bg-sw-primary/10"
+        >
+          Wróć na stronę główną
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

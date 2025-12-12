@@ -1,0 +1,41 @@
+---
+import Badge from "@components/astropie/Badge.astro";
+
+const safetyItems = ["Standardy ochrony małoletnich", "Umowy i jasne zasady współpracy", "Ubezpieczenie OC"];
+---
+
+<section class="py-section">
+  <div class="mx-auto w-full max-w-6xl px-4">
+    <div class="mx-auto max-w-3xl text-center">
+      <Badge title="Zaufanie rodziców i instytucji" color="primary" />
+      <h2 class="mt-4 text-3xl font-black text-sw-text">Dlaczego rodzice powierzają nam przyjęcia?</h2>
+      <p class="mt-4 text-lg text-sw-muted">
+        Współpracujemy z rodzinami, szkołami i firmami w całej Warszawie. Dbamy o bezpieczeństwo dzieci oraz transparentne zasady
+        organizacji wydarzeń.
+      </p>
+    </div>
+    <div class="mt-12 grid gap-6 lg:grid-cols-3">
+      <article class="rounded-lg border border-sw-border bg-sw-card p-6 text-center shadow-card">
+        <p class="text-sm font-medium uppercase tracking-wide text-sw-primary">Wydarzenia rocznie</p>
+        <p class="mt-4 text-5xl font-black text-sw-text">180+</p>
+        <p class="mt-2 text-sw-muted">urodzin, pikników i eventów rodzinnych</p>
+      </article>
+      <article class="rounded-lg border border-sw-border bg-sw-card p-6 text-center shadow-card">
+        <p class="text-sm font-medium uppercase tracking-wide text-sw-primary">Opinie rodziców</p>
+        <p class="mt-4 text-5xl font-black text-sw-text">4,9 / 5</p>
+        <p class="mt-2 text-sw-muted">średnia ocen z Google i Oferteo</p>
+      </article>
+      <article class="rounded-lg border border-sw-border bg-sw-card p-6 shadow-card">
+        <p class="text-sm font-medium uppercase tracking-wide text-sw-primary">Bezpieczeństwo</p>
+        <ul class="mt-4 space-y-2 text-sw-muted">
+          {safetyItems.map((item) => (
+            <li class="flex items-start gap-2">
+              <span aria-hidden="true" class="mt-1 size-1.5 rounded-lg bg-sw-primary"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>

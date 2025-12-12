@@ -4,12 +4,12 @@ import { phone } from "@config/company";
 ---
 
 <a
-	href={phone.href}
-	class="not-prose flex items-center gap-x-3 hover:-translate-y-1 hover:-rotate-1 transition duration-300"
+  href={phone.href}
+  class="not-prose flex items-center gap-x-3 transition duration-300 hover:-translate-y-1"
 >
-	<img src={phoneIcon.src} alt="Phone" class="size-12 rounded-full bg-brand-yellow p-2.5" loading="lazy" />
-	<div>
-		<p class="text-base/4">Call us</p>
-		<span class="text-brand-blue font-bold text-base/6">{phone.label}</span>
-	</div>
+  <img src={phoneIcon.src} alt="Telefon" class="size-12 rounded-lg bg-sw-primary/10 p-2.5" loading="lazy" />
+  <div>
+    <p class="text-sm text-sw-muted">Zadzwoń do nas</p>
+    <span class="text-base font-medium text-sw-primary">{phone.label}</span>
+  </div>
 </a>

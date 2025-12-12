@@ -14,7 +14,7 @@ describe('getPagination', () => {
     expect(pagination.startIndex).toBe(10);
     expect(pagination.endIndex).toBe(20);
     expect(pagination.prevUrl).toBe('/blog');
-    expect(pagination.nextUrl).toBe('/blog/page/3/');
+    expect(pagination.nextUrl).toBe('/blog/page-3/');
     expect(pagination.postsPerPage).toBe(10);
   });
 
@@ -43,7 +43,7 @@ describe('getPagination', () => {
 
     expect(pagination.currentPage).toBe(3);
     expect(pagination.totalPages).toBe(3);
-    expect(pagination.prevUrl).toBe('/articles/page/2/');
+    expect(pagination.prevUrl).toBe('/articles/page-2/');
     expect(pagination.nextUrl).toBeNull();
     expect(pagination.startIndex).toBe(10);
     expect(pagination.endIndex).toBe(12);

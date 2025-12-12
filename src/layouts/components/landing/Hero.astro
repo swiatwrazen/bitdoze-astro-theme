@@ -1,0 +1,46 @@
+---
+import ConfiguratorPlaceholder from "./ConfiguratorPlaceholder.astro";
+---
+
+<section class="py-section">
+  <div class="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 lg:flex-row lg:items-center">
+    <div class="flex-1 space-y-6">
+      <p class="text-sm font-medium uppercase tracking-widest text-sw-primary">Świat Wrażeń</p>
+      <h1 class="text-4xl font-black leading-tight text-sw-text sm:text-5xl">
+        Animatorzy na przyjęcia dla dzieci w Warszawie
+      </h1>
+      <p class="text-lg text-sw-muted">
+        Organizujemy urodziny, imprezy szkolne i rodzinne wydarzenia z profesjonalnymi animatorami. Tworzymy
+        dopracowane w każdym detalu scenariusze, które angażują dzieci i odciążają rodziców.
+      </p>
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <a
+          href="#konfigurator"
+          class="inline-flex items-center justify-center rounded-lg bg-sw-primary px-5 py-3 text-lg font-medium text-white transition-colors hover:bg-sw-primaryDark"
+        >
+          Skonfiguruj przyjęcie
+        </a>
+        <a href="/cennik" class="text-lg font-medium text-sw-primary hover:text-sw-primaryDark" aria-label="Zobacz cennik">
+          Zobacz cennik
+        </a>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-3">
+        <div class="rounded-lg border border-sw-border bg-sw-card p-4 shadow-card">
+          <p class="text-3xl font-black text-sw-primary">150+</p>
+          <p class="text-sm text-sw-muted">zorganizowanych przyjęć rocznie</p>
+        </div>
+        <div class="rounded-lg border border-sw-border bg-sw-card p-4 shadow-card">
+          <p class="text-3xl font-black text-sw-primary">4,9/5</p>
+          <p class="text-sm text-sw-muted">średnia ocen rodziców</p>
+        </div>
+        <div class="rounded-lg border border-sw-border bg-sw-card p-4 shadow-card">
+          <p class="text-3xl font-black text-sw-primary">30 km</p>
+          <p class="text-sm text-sw-muted">obszar działania wokół Warszawy</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex-1">
+      <ConfiguratorPlaceholder />
+    </div>
+  </div>
+</section>

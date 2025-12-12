@@ -1,0 +1,17 @@
+---
+import type { Addon } from "@data/pricing";
+
+interface Props {
+  addon: Addon;
+}
+
+const { addon } = Astro.props;
+---
+
+<article class="flex h-full flex-col rounded-lg border border-sw-border bg-sw-card p-5 shadow-card transition hover:-translate-y-1">
+  <header>
+    <h3 class="text-lg font-medium text-sw-text">{addon.name}</h3>
+    <p class="mt-1 text-sm text-sw-muted">{addon.description}</p>
+  </header>
+  <p class="mt-4 text-base font-bold text-sw-primary">{addon.price}</p>
+</article>

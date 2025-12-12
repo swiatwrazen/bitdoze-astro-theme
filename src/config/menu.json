@@ -1,6 +1,5 @@
 {
   "main": [
-    { "name": "Świat Wrażeń", "url": "/" },
     { "name": "Oferta", "url": "/oferta" },
     {
       "name": "Animacja",
@@ -24,15 +23,6 @@
         { "name": "Papierowe show", "url": "/atrakcje-dla-dzieci/papierowe-show-silver-party" },
         { "name": "Fluo / Neon Party", "url": "/atrakcje-dla-dzieci/fluo-party-dla-dzieci" },
         { "name": "Warsztaty plastyczne", "url": "/atrakcje-dla-dzieci/warsztaty-plastyczne-dla-dzieci" }
-      ]
-    },
-    {
-      "name": "Dekoracje i słodycze",
-      "url": "/dekoracje-i-slodycze/balonow-z-helem-warszawa",
-      "hasChildren": true,
-      "children": [
-        { "name": "Balony z helem", "url": "/dekoracje-i-slodycze/balonow-z-helem-warszawa" },
-        { "name": "Torty urodzinowe", "url": "/dekoracje-i-slodycze/tort-urodzinowy" }
       ]
     },
     { "name": "Cennik", "url": "/cennik" },

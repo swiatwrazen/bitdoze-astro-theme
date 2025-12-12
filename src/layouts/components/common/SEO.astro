@@ -1,5 +1,7 @@
 ---
 import { siteConfig } from '@config/site';
+import { company, phone, email, address } from '@config/company';
+import social from '@config/social.json';
 
 export interface Props {
   title?: string;
@@ -27,6 +29,8 @@ export interface Props {
     uploadDate?: Date;
     duration?: string; // ISO 8601 format
   };
+  // FAQ structured data
+  faqItems?: Array<{ question: string; answer: string }>;
 }
 
 const {
@@ -50,12 +54,12 @@ let shouldNoindex = noindex;
 const isTags = Astro.url.pathname.includes('/tags/');
 const isCategories = Astro.url.pathname.includes('/categories/');
 const isSearch = Astro.url.pathname.includes('/search');
-const isPagination = Astro.url.pathname.includes('/page/');
+const isPagination = /\/page-\d+\/?$/.test(Astro.url.pathname);
 
 if (
   (isTags && siteConfig.noindex.tags) ||
   (isCategories && siteConfig.noindex.categories) ||
-  isSearch ||
+  (isSearch && siteConfig.noindex.search) ||
   isPagination
 ) {
   shouldNoindex = true;
@@ -78,6 +82,44 @@ const safeUrl = (path, base) => {
     return `${baseUrl.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
   }
 };
+
+const sanitizeContactValue = (value, prefix) => (value ? value.replace(prefix, '') : undefined);
+
+const sameAsLinks = Object.values(social)
+  .filter(Boolean)
+  .filter((link) => /^https?:\/\//.test(link));
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": company.name,
+  "url": siteConfig.url,
+  "description": siteConfig.description,
+  "logo": safeUrl('/logo.svg', Astro.site || siteConfig.url),
+  "image": safeUrl(siteConfig.defaultImage, Astro.site || siteConfig.url),
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": sanitizeContactValue(phone.href, 'tel:'),
+      "email": sanitizeContactValue(email.href, 'mailto:'),
+      "contactType": "customer service",
+      "areaServed": "PL",
+      "availableLanguage": ["pl", "en"]
+    }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": address.street,
+    "addressLocality": address.city,
+    "postalCode": address.zip,
+    "addressRegion": address.state,
+    "addressCountry": address.country
+  }
+};
+
+if (sameAsLinks.length) {
+  organizationSchema.sameAs = sameAsLinks;
+}
 
 // Website schema
 const websiteSchema = {
@@ -119,6 +161,19 @@ const videoSchema = Astro.props.video ? {
   "duration": Astro.props.video.duration || "PT0M0S",
   "contentUrl": Astro.props.video.src,
   "embedUrl": Astro.props.video.src
+} : null;
+
+const faqSchema = Astro.props.faqItems?.length ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": Astro.props.faqItems.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
 } : null;
 
 // Article schema (for blog posts)
@@ -225,6 +280,9 @@ try {
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 
+<!-- Organization Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+
 <!-- BreadcrumbList Schema (if breadcrumbs are provided) -->
 {breadcrumbsSchema && (
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)} />
@@ -233,4 +291,9 @@ try {
 <!-- VideoObject Schema (if video is provided) -->
 {videoSchema && article && (
   <script type="application/ld+json" set:html={JSON.stringify(videoSchema)} />
+)}
+
+<!-- FAQ Schema (if provided) -->
+{faqSchema && (
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 )}

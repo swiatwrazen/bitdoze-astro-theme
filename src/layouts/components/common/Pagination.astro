@@ -46,11 +46,20 @@ const pageNumbers = () => {
 };
 
 // Generate the URL for a specific page
+const stripTrailingSlash = (path: string) => {
+  if (path === '/' || path === '') return '';
+  return path.endsWith('/') ? path.slice(0, -1) : path;
+};
+
 const getPageUrl = (pageNum: number) => {
   if (pageNum === 1) {
     return basePath;
   }
-  return `${basePath}${basePath.endsWith('/') ? '' : '/'}page/${pageNum}/`;
+  const normalizedBase = stripTrailingSlash(basePath);
+  if (!normalizedBase) {
+    return `/page-${pageNum}/`;
+  }
+  return `${normalizedBase}/page-${pageNum}/`;
 };
 ---
 
@@ -62,7 +71,7 @@ const getPageUrl = (pageNum: number) => {
         {prevUrl ? (
           <a 
             href={prevUrl} 
-            class="flex items-center justify-center px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            class="flex items-center justify-center px-3 py-3 rounded-md border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             aria-label="Go to previous page"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -72,7 +81,7 @@ const getPageUrl = (pageNum: number) => {
           </a>
         ) : (
           <span 
-            class="flex items-center justify-center px-3 py-2 rounded-md border border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed"
+            class="flex items-center justify-center px-3 py-3 rounded-md border border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed"
             aria-disabled="true"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -87,11 +96,11 @@ const getPageUrl = (pageNum: number) => {
       {pageNumbers().map((pageNum) => (
         <li>
           {pageNum === '...' ? (
-            <span class="px-3 py-2 text-gray-500 dark:text-gray-400">...</span>
+            <span class="px-3 py-3 text-gray-500 dark:text-gray-400">...</span>
           ) : (
             <a 
               href={getPageUrl(pageNum as number)} 
-              class={`px-3 py-2 rounded-md ${currentPage === pageNum 
+              class={`px-3 py-3 rounded-md ${currentPage === pageNum 
                 ? 'bg-blue-600 text-white dark:bg-blue-700 font-medium' 
                 : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700'} transition-colors`}
               aria-current={currentPage === pageNum ? 'page' : undefined}
@@ -107,7 +116,7 @@ const getPageUrl = (pageNum: number) => {
         {nextUrl ? (
           <a 
             href={nextUrl} 
-            class="flex items-center justify-center px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            class="flex items-center justify-center px-3 py-3 rounded-md border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             aria-label="Go to next page"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -117,7 +126,7 @@ const getPageUrl = (pageNum: number) => {
           </a>
         ) : (
           <span 
-            class="flex items-center justify-center px-3 py-2 rounded-md border border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed"
+            class="flex items-center justify-center px-3 py-3 rounded-md border border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed"
             aria-disabled="true"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

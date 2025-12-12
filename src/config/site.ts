@@ -13,6 +13,7 @@ export const siteConfig = {
     tags: true, // Set to true to add noindex meta tag to tag pages
     categories: false, // Set to true to add noindex meta tag to category pages
     authors: false, // Set to true to add noindex meta tag to author pages
+    search: true,
   },
   
   // Default social image

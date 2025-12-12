@@ -1,0 +1,32 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Section from "@components/astropie/Section.astro";
+import Badge from "@components/astropie/Badge.astro";
+import Button from "@components/astropie/Button.astro";
+import FaqAccordion from "@components/landing/FaqAccordion.astro";
+import { faqItems } from "@data/faq";
+
+const pageTitle = "FAQ – Animatorzy na przyjęcia dla dzieci w Warszawie";
+const pageDescription =
+  "Najczęściej zadawane pytania dotyczące animatorów, pakietów urodzinowych i dodatkowych atrakcji Świata Wrażeń w Warszawie.";
+---
+
+<Layout title={pageTitle} description={pageDescription} faqItems={faqItems}>
+  <Section>
+    <div class="mx-auto max-w-3xl text-center space-y-4">
+      <Badge title="Najczęściej zadawane pytania" color="primary" />
+      <h1 class="text-4xl font-black text-sw-text">{pageTitle}</h1>
+      <p class="text-lg text-sw-muted">
+        Zebraliśmy odpowiedzi na pytania rodziców i organizatorów wydarzeń. Jeśli czegoś brakuje, skontaktuj się z nami – chętnie doradzimy
+        lub przygotujemy indywidualny plan animacji.
+      </p>
+    </div>
+    <div class="mt-12">
+      <FaqAccordion items={faqItems} />
+    </div>
+    <div class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <Button url="/cennik" color="primary">Sprawdź cennik</Button>
+      <a href="/#konfigurator" class="font-medium text-sw-primary hover:text-sw-text">Skonfiguruj przyjęcie</a>
+    </div>
+  </Section>
+</Layout>
