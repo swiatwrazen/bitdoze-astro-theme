@@ -1,6 +1,6 @@
-# Bitdoze Astro Blog Theme
+# Świat Wrażeń Website
 
-A modern, responsive blog theme for Astro with support for tags, categories, and series. This theme is designed to be fast, SEO-friendly, and easy to customize.
+A modern marketing site for Świat Wrażeń built with Astro. The project includes a landing page, service catalog, blog, full-text search, structured data, and bespoke components tailored to the brand.
 
 ## Features
 
@@ -20,7 +20,7 @@ A modern, responsive blog theme for Astro with support for tags, categories, and
 ## Project Structure
 
 ```
-├── public/             # Static assets
+├── public/             # Static assets (logo, manifest, favicons)
 ├── src/
 │   ├── assets/         # Images and other assets
 │   ├── config/         # Site configuration
@@ -30,7 +30,7 @@ A modern, responsive blog theme for Astro with support for tags, categories, and
 │   ├── styles/         # Global styles
 │   └── utils/          # Utility functions
 ├── astro.config.mjs    # Astro configuration
-├── package.json        # Dependencies and scripts
+├── package.json        # Scripts and dependencies
 ```
 
 ### Key Directories and Files
@@ -42,16 +42,15 @@ A modern, responsive blog theme for Astro with support for tags, categories, and
 
 ## Components
 
-The theme includes several reusable components:
+Key building blocks:
 
-- **Layout.astro**: Main layout component with header and footer
-- **PostLayout.astro**: Layout for blog posts with metadata and content
-- **Header/Footer**: Navigation and site information
-- **Pagination**: For navigating through multiple pages of content
-- **Search**: Client-side search functionality
-- **Author Card**: Display author information
-- **Post Card**: Display post previews in lists
-- **Tag/Category Cloud**: Display and filter by tags or categories
+- **Layout.astro** – global wrapper with SEO, navigation, and footer
+- **Nav / Header / Footer** – custom UI matching Świat Wrażeń branding
+- **Landing components** – Hero, TrustSection, PricePackageCard, FaqAccordion, etc.
+- **PostLayout** – blog layout with breadcrumbs, schema, share buttons
+- **Pagination** – unified logic across blog, categories, tags, authors
+- **Search** – JSON API + client-side Fuse.js search
+- **SEO.astro** – OpenGraph, Schema.org (Organization, Breadcrumbs, FAQ, Video), canonical, robots
 
 ## Getting Started
 
@@ -62,10 +61,10 @@ The theme includes several reusable components:
 
 ### Installation
 
-1. Clone this repository:
+1. Clone repository:
    ```bash
-   git clone git@github.com:bitdoze/bitdoze-astro-theme.git my-blog
-   cd my-blog
+   git clone git@github.com:swiatwrazen/bitdoze-astro-theme.git swiat-wrazen-site
+   cd swiat-wrazen-site
    ```
 
 2. Install dependencies:
@@ -82,16 +81,17 @@ The theme includes several reusable components:
 
 ### Configuration
 
-1. Update site information in `src/config/config.json`
-2. Update site metadata in `src/config/site.ts`
-3. Update menu items in `src/config/menu.json`
-4. Update social links in `src/config/social.json`
+1. `src/config/config.json` – company info, CTA content, contact details
+2. `src/config/site.ts` – global SEO data, pagination, noindex flags
+3. `src/config/menu.json` – navigation and footer links
+4. `src/config/social.json` – social links used in footer and SEO schema
+5. `src/config/company.ts` – company name, slogan, theme colors, contact data
 
-### Creating Content
+### Content Collections
 
 #### Blog Posts
 
-Create a new `.md` or `.mdx` file in `src/content/posts/` with the following frontmatter:
+Markdown/MDX files in `src/content/posts/`:
 
 ```md
 ---
@@ -111,7 +111,7 @@ Your post content goes here...
 
 #### Authors
 
-Create a new `.md` file in `src/content/authors/` with the following frontmatter:
+Markdown files in `src/content/authors/`:
 
 ```md
 ---
@@ -132,14 +132,17 @@ Author bio goes here...
 
 ### Styling
 
-This theme uses Tailwind CSS for styling. You can customize the design by:
+The project uses Tailwind CSS plus global styles:
 
-1. Modifying `tailwind.config.js` to change colors, fonts, etc.
-2. Adding custom CSS in `src/styles/global.css`
+1. Customize colors/fonts in `tailwind.config.cjs`
+2. Extend global utilities in `src/styles/global.css`
+3. Branding utilities (`bg-sw-primary`, `font-luckiest`, etc.) are defined in Tailwind config
 
-### Adding New Pages
+### Pages and Content
 
-Create a new `.astro` file in the `src/pages/` directory. The file path will determine the URL.
+- Files in `src/pages/` map directly to routes
+- Rich content pages (e.g., `/oferta`, `/karta-warszawiaka`) live in `src/content/pages/` and are rendered via `src/pages/[...slug].astro`
+- Pagination routes (`/blog/page-n/`, `/categories/<slug>/page-n/`, etc.) are auto-generated and include unique metadata
 
 ## Deployment
 
@@ -159,5 +162,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Built with [Astro](https://astro.build)
 - Styled with [Tailwind CSS](https://tailwindcss.com)
-- Icons from [Astro Icon](https://github.com/natemoo-re/astro-icon)
-- Search functionality with [Fuse.js](https://fusejs.io)
+- Icons via [Astro Icon](https://github.com/natemoo-re/astro-icon)
+- Search powered by [Fuse.js](https://fusejs.io)
